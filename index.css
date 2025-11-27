@@ -107,6 +107,35 @@ body {
     /* Optional: adjust if needed */
 }
 
+/* Games View Specific Styles */
+#games-view {
+    width: 100%;
+}
+
+.games-header {
+    width: 100%;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.games-header #back-button {
+    margin-right: 16px;
+}
+
+.games-header #category-title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--text-primary);
+}
+
+#games-grid {
+    width: 100%;
+}
+
 /* Class Card */
 .class-card {
     width: var(--card-width);
