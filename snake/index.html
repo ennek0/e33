@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Snake game in Packet Tracer interface">
+    <title>Classroom</title>
+    <link rel="icon" type="image/png" href="../imagenes/classroom1.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Top Menu Bar - Classic Windows Style -->
+    <div class="menubar">
+        <span class="menu-item">File</span>
+        <span class="menu-item">Edit</span>
+        <span class="menu-item">Options</span>
+        <span class="menu-item">View</span>
+        <span class="menu-item">Tools</span>
+        <span class="menu-item">Extensions</span>
+        <span class="menu-item">Window</span>
+        <span class="menu-item">Help</span>
+    </div>
+
+    <!-- Icon Toolbar - Monochrome Icons -->
+    <div class="icon-toolbar">
+        <div class="toolbar-group">
+            <button class="icon-btn" title="New">📄</button>
+            <button class="icon-btn" title="Open">📂</button>
+            <button class="icon-btn" title="Save">💾</button>
+            <button class="icon-btn" title="Print">🖨️</button>
+        </div>
+        <div class="toolbar-separator"></div>
+        <div class="toolbar-group">
+            <button class="icon-btn" title="Undo">↶</button>
+            <button class="icon-btn" title="Redo">↷</button>
+        </div>
+        <div class="toolbar-separator"></div>
+        <div class="toolbar-group">
+            <button class="icon-btn" title="Copy">📋</button>
+            <button class="icon-btn" title="Paste">📄</button>
+            <button class="icon-btn" title="Delete">🗑️</button>
+        </div>
+        <div class="toolbar-separator"></div>
+        <div class="toolbar-group">
+            <button class="icon-btn" title="Zoom In">🔍+</button>
+            <button class="icon-btn" title="Zoom Out">🔍-</button>
+        </div>
+    </div>
+
+    <!-- Blue Bar - Logical/Physical Selector -->
+    <div class="blue-bar">
+        <div class="mode-tabs">
+            <div class="mode-tab active">Logical</div>
+            <div class="mode-tab">Physical</div>
+        </div>
+        <div class="blue-bar-center">
+            <span>Root</span>
+            <div class="nav-icons">
+                <button class="nav-icon" title="Back">←</button>
+                <button class="nav-icon" title="View">👁</button>
+                <button class="nav-icon" title="User">👤</button>
+            </div>
+        </div>
+        <div class="sim-time" id="simTime">00:00:00</div>
+    </div>
+
+    <!-- Main Workspace Area -->
+    <div class="workspace-container">
+        <!-- Central Workspace (Game Canvas) -->
+        <div class="central-workspace">
+            <!-- Coordinate Display -->
+            <div class="coordinate-display">x: 207, y: 53</div>
+
+            <canvas id="gameCanvas" width="600" height="600"></canvas>
+
+            <!-- Game Overlays -->
+            <div class="game-overlay" id="gameOverlay">
+                <div class="overlay-content">
+                    <h2 id="overlayTitle">Network Snake</h2>
+                    <p id="overlayMessage">Press SPACE to start</p>
+                    <div class="controls-hint">
+                        <p>Use arrow keys to control</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="explosion-overlay" id="explosionOverlay">
+                <div class="explosion-container">
+                    <img src="packet tracer.png" alt="Packet Tracer" class="explosion-logo">
+                    <div class="explosion-particles"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Device Panel - Dark Blue Bottom Section -->
+    <div class="device-panel">
+        <!-- Category Tabs -->
+        <div class="device-categories">
+            <div class="category-tab active">🔀 Routers</div>
+            <div class="category-tab">📡 Switches</div>
+            <div class="category-tab">⚡ Hubs</div>
+            <div class="category-tab">📶 Wireless</div>
+            <div class="category-tab">🌐 WAN</div>
+            <div class="category-tab">🔒 Security</div>
+            <div class="category-tab">💻 End Devices</div>
+            <div class="category-tab">🔧 Components</div>
+        </div>
+
+        <!-- Device Items -->
+        <div class="device-items">
+            <div class="device-item" title="4331">
+                <div class="device-icon">🔀</div>
+                <div class="device-label">4331</div>
+            </div>
+            <div class="device-item" title="4321">
+                <div class="device-icon">🔀</div>
+                <div class="device-label">4321</div>
+            </div>
+            <div class="device-item" title="1941">
+                <div class="device-icon">🔀</div>
+                <div class="device-label">1941</div>
+            </div>
+            <div class="device-item" title="2901">
+                <div class="device-icon">🔀</div>
+                <div class="device-label">2901</div>
+            </div>
+            <div class="device-item" title="2911">
+                <div class="device-icon">🔀</div>
+                <div class="device-label">2911</div>
+            </div>
+            <div class="device-item" title="819HGW">
+                <div class="device-icon">🔀</div>
+                <div class="device-label">819HGW</div>
+            </div>
+            <div class="device-item" title="829">
+                <div class="device-icon">🔀</div>
+                <div class="device-label">829</div>
+            </div>
+            <div class="device-item" title="1240">
+                <div class="device-icon">🔀</div>
+                <div class="device-label">1240</div>
+            </div>
+            <div class="device-item" title="PT-Empty">
+                <div class="device-icon">🔀</div>
+                <div class="device-label">PT-Empty</div>
+            </div>
+            <div class="device-item" title="1841">
+                <div class="device-icon">🔀</div>
+                <div class="device-label">1841</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Status Bar - Dark Blue -->
+    <div class="status-bar">
+        <div class="status-left">
+            <div class="time-display">Time: <span id="gameTime">00:00:00</span></div>
+            <div class="time-controls">
+                <button class="time-btn" id="startBtn" title="Play">▶</button>
+                <button class="time-btn" id="pauseBtn" disabled title="Pause">⏸</button>
+                <button class="time-btn" id="restartBtn" title="Fast Forward">⏩</button>
+            </div>
+        </div>
+
+        <div class="status-center">
+            <span class="status-info">Score: <strong id="score">0</strong></span>
+            <span class="status-separator">|</span>
+            <span class="status-info">High Score: <strong id="highScore">0</strong></span>
+            <span class="status-separator">|</span>
+            <span class="status-info">Level:
+                <select class="level-select" id="levelSelect">
+                    <option value="1">Easy</option>
+                    <option value="2" selected>Normal</option>
+                    <option value="3">Hard</option>
+                </select>
+            </span>
+        </div>
+
+        <div class="status-right">
+            <div class="mode-toggle">
+                <button class="mode-btn active" id="realtimeBtn">Realtime</button>
+                <button class="mode-btn" id="simulationBtn">Simulation</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+
+</html>

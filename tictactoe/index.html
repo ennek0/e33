@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A modern, beautiful tic-tac-toe game with smooth animations and premium design">
+    <title>Classroom</title>
+    <link rel="icon" type="image/png" href="../imagenes/classroom1.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="title">Tic-Tac-Toe</h1>
+            <p class="subtitle">Modern • Elegant • Fun</p>
+        </header>
+
+        <!-- Mode Selection Overlay -->
+        <div class="mode-selection-overlay active" id="modeSelectionOverlay">
+            <div class="mode-selection-content">
+                <h2 class="mode-selection-title">Choose Game Mode</h2>
+                <p class="mode-selection-subtitle">Select how you want to play</p>
+
+                <div class="mode-cards">
+                    <div class="mode-card" id="pvpMode" data-mode="pvp">
+                        <div class="mode-icon">👥</div>
+                        <h3 class="mode-card-title">1v1 Mode</h3>
+                        <p class="mode-card-description">Play against a friend locally</p>
+                    </div>
+
+                    <div class="mode-card" id="pvcMode" data-mode="pvc">
+                        <div class="mode-icon">🤖</div>
+                        <h3 class="mode-card-title">vs Computer</h3>
+                        <p class="mode-card-description">Challenge the AI opponent</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Difficulty Selection Overlay -->
+        <div class="mode-selection-overlay" id="difficultySelectionOverlay">
+            <div class="mode-selection-content">
+                <h2 class="mode-selection-title">Choose Difficulty</h2>
+                <p class="mode-selection-subtitle">Select your challenge level</p>
+
+                <div class="difficulty-cards">
+                    <div class="difficulty-card easy" id="easyDifficulty">
+                        <div class="difficulty-icon">😊</div>
+                        <h3 class="difficulty-card-title">Level 1</h3>
+                        <p class="difficulty-label">Easy</p>
+                        <p class="difficulty-card-description">Perfect for beginners - AI makes mistakes</p>
+                    </div>
+
+                    <div class="difficulty-card medium" id="mediumDifficulty">
+                        <div class="difficulty-icon">🤔</div>
+                        <h3 class="difficulty-card-title">Level 2</h3>
+                        <p class="difficulty-label">Medium</p>
+                        <p class="difficulty-card-description">Balanced challenge - AI plays smart</p>
+                    </div>
+
+                    <div class="difficulty-card impossible" id="impossibleDifficulty">
+                        <div class="difficulty-icon">😈</div>
+                        <h3 class="difficulty-card-title">Level 3</h3>
+                        <p class="difficulty-label">Impossible</p>
+                        <p class="difficulty-card-description">Unbeatable - AI plays perfectly</p>
+                    </div>
+                </div>
+
+                <button class="btn btn-secondary back-btn" id="backToDifficulty">← Back</button>
+            </div>
+        </div>
+
+        <main class="game-container">
+            <div class="status-panel">
+                <div class="player-indicator">
+                    <span class="current-player-label">Current Player:</span>
+                    <span class="current-player" id="currentPlayer">X</span>
+                </div>
+                <div class="game-mode-indicator">
+                    <span class="mode-label">Mode:</span>
+                    <span class="mode-value" id="currentMode">1v1</span>
+                </div>
+                <div class="score-board">
+                    <div class="score-item">
+                        <span class="score-label" id="labelX">Player X</span>
+                        <span class="score-value" id="scoreX">0</span>
+                    </div>
+                    <div class="score-divider"></div>
+                    <div class="score-item">
+                        <span class="score-label" id="labelO">Player O</span>
+                        <span class="score-value" id="scoreO">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="game-board" id="gameBoard">
+                <div class="cell" data-index="0"></div>
+                <div class="cell" data-index="1"></div>
+                <div class="cell" data-index="2"></div>
+                <div class="cell" data-index="3"></div>
+                <div class="cell" data-index="4"></div>
+                <div class="cell" data-index="5"></div>
+                <div class="cell" data-index="6"></div>
+                <div class="cell" data-index="7"></div>
+                <div class="cell" data-index="8"></div>
+            </div>
+
+            <div class="controls">
+                <button class="btn btn-primary" id="resetBtn">New Game</button>
+                <button class="btn btn-secondary" id="changeModeBtn">Change Mode</button>
+                <button class="btn btn-secondary" id="clearScoreBtn">Clear Scores</button>
+            </div>
+
+            <div class="message-overlay" id="messageOverlay">
+                <div class="message-content">
+                    <h2 class="message-title" id="messageTitle"></h2>
+                    <p class="message-text" id="messageText"></p>
+                    <button class="btn btn-primary" id="playAgainBtn">Play Again</button>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>Built with ❤️ for fun and learning</p>
+        </footer>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+
+</html>
