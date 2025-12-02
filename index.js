@@ -6,7 +6,7 @@ const categories = {
     'e33': {
         title: 'E33',
         section: 'Creator\'s Games',
-        gradient: 'linear-gradient(135deg, #1967d2 0%, #1557b0 100%)',
+        backgroundImage: 'fondos/clase1.jpg',
         assignments: [
             {
                 id: 'snake-game',
@@ -34,10 +34,33 @@ const categories = {
             }
         ]
     },
+    'gambling': {
+        title: 'Gambling Games',
+        section: 'Casino & Card Games',
+        backgroundImage: 'fondos/clase4.jpg',
+        assignments: [
+            {
+                id: 'poker',
+                title: 'Classroom Poker',
+                type: 'Texas Hold\'em',
+                dueDate: 'No due date',
+                icon: 'casino',
+                path: './poker/index.html'
+            },
+            {
+                id: 'blackjack',
+                title: 'Blackjack',
+                type: 'Card Game',
+                dueDate: 'No due date',
+                icon: 'casino',
+                path: './black jack/index.html'
+            }
+        ]
+    },
     'cars': {
         title: 'Car Games',
         section: 'Racing',
-        gradient: 'linear-gradient(135deg, #00897b 0%, #00695c 100%)',
+        backgroundImage: 'fondos/clase2.jpg',
         assignments: [
             {
                 id: 'drift-hunters',
@@ -51,8 +74,8 @@ const categories = {
     },
     '1v1': {
         title: '1v1',
-        section: 'Battle Games / PvP',
-        gradient: 'linear-gradient(135deg, #d93025 0%, #b31412 100%)',
+        section: 'Multiplayer Games',
+        backgroundImage: 'fondos/clase3.jpg',
         assignments: [
             {
                 id: '1v1-lol',
@@ -61,6 +84,21 @@ const categories = {
                 dueDate: 'No due date',
                 icon: 'sports_kabaddi',
                 path: './1v1-lol-main/index.html'
+            }
+        ]
+    },
+    'football': {
+        title: 'Football Games',
+        section: 'Soccer & Sports',
+        backgroundImage: 'fondos/clase6.jpg',
+        assignments: [
+            {
+                id: 'penalty-shooters-2',
+                title: 'Penalty Shooters 2',
+                type: 'Soccer Game',
+                dueDate: 'No due date',
+                icon: 'sports_soccer',
+                path: './penalty-shooters-2-main/index.html'
             }
         ]
     }
@@ -77,16 +115,50 @@ let backButton;
 // ===== INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', () => {
     initializeElements();
+    applyCardBackgrounds();
     setupEventListeners();
 });
 
+function applyCardBackgrounds() {
+    // Apply background images to cards
+    const homepageCards = document.querySelectorAll('.homepage-card');
+    console.log('Applying backgrounds to', homepageCards.length, 'cards');
+
+    homepageCards.forEach(card => {
+        const courseId = card.getAttribute('data-course');
+        const category = categories[courseId];
+        if (category && category.backgroundImage) {
+            const cardHeader = card.querySelector('.card-header-home');
+            if (cardHeader) {
+                cardHeader.style.backgroundImage = `url('${category.backgroundImage}')`;
+                cardHeader.style.backgroundSize = 'cover';
+                cardHeader.style.backgroundPosition = 'center';
+                console.log(`Applied background to ${courseId}:`, category.backgroundImage);
+            } else {
+                console.error(`Card header not found for ${courseId}`);
+            }
+        } else {
+            console.log(`No background image for ${courseId}`);
+        }
+    });
+}
+
 function initializeElements() {
     categoriesView = document.getElementById('categories-view');
-    gamesView = document.getElementById('games-view');
+    gamesView = document.getElementById('course-view');
     courseTitle = document.getElementById('course-title');
     courseDescription = document.getElementById('course-description');
     assignmentList = document.querySelector('.assignment-list');
     backButton = document.getElementById('menu-toggle');
+
+    // Debug: Log if elements are found
+    console.log('Elements initialized:', {
+        categoriesView: !!categoriesView,
+        gamesView: !!gamesView,
+        courseTitle: !!courseTitle,
+        courseDescription: !!courseDescription,
+        assignmentList: !!assignmentList
+    });
 }
 
 function setupEventListeners() {
@@ -106,11 +178,12 @@ function setupEventListeners() {
     });
 
     // Menu Toggle: Show/hide sidebar
-    const menuToggles = document.querySelectorAll('#menu-toggle');
-    const leftSidebar = document.querySelector('.left-sidebar');
+    const menuToggles = document.querySelectorAll('.menu-button');
+    const leftSidebar = document.querySelector('.sidebar');
     menuToggles.forEach(menuToggle => {
         if (menuToggle && leftSidebar) {
             menuToggle.addEventListener('click', () => {
+                console.log('Menu toggle clicked');
                 leftSidebar.classList.toggle('open');
             });
         }
@@ -122,6 +195,14 @@ function setupEventListeners() {
     const coursesList = document.getElementById('courses-list');
 
     if (coursesHeader) {
+        // Expand courses list by default
+        if (coursesList) {
+            coursesList.classList.add('expanded');
+            if (coursesArrow) {
+                coursesArrow.style.transform = 'rotate(180deg)';
+            }
+        }
+
         coursesHeader.addEventListener('click', () => {
             coursesList.classList.toggle('expanded');
             // Update the SVG icon rotation
@@ -176,18 +257,26 @@ function setupEventListeners() {
 // ===== SHOW SECTION =====
 function showSection(courseId) {
     const category = categories[courseId];
-    if (!category) return;
+    if (!category) {
+        console.error('Category not found:', courseId);
+        return;
+    }
+
+    console.log('Showing section:', courseId, category);
 
     // Update course info
-    courseTitle.textContent = category.title;
-    courseDescription.textContent = category.section;
+    if (courseTitle) courseTitle.textContent = category.title;
+    if (courseDescription) courseDescription.textContent = category.section;
 
     // Render assignments
     renderAssignments(category.assignments);
 
     // Switch views
-    categoriesView.style.display = 'none';
-    gamesView.classList.add('active');
+    if (categoriesView) categoriesView.style.display = 'none';
+    if (gamesView) {
+        gamesView.style.display = 'flex';
+        gamesView.classList.add('active');
+    }
 }
 
 // ===== RENDER ASSIGNMENTS =====
@@ -243,19 +332,25 @@ function getIconSvg(iconType) {
     const icons = {
         'sports_esports': '<svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2zm4.5 2c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4-3c-.83 0-1.5-.67-1.5-1.5S18.67 9 19.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"></path></svg>',
         'grid_on': '<svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M3 3v8h8V3H3zm6 6H5V5h4v4zm-6 4v8h8v-8H3zm6 6H5v-4h4v4zm4-16v8h8V3h-8zm6 6h-4V5h4v4zm-6 4v8h8v-8h-8zm6 6h-4v-4h4v4z"></path></svg>',
-        'videogame_asset': '<svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2zm4.5 2c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4-3c-.83 0-1.5-.67-1.5-1.5S18.67 9 19.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"></path></svg>',
+        'casino': '<svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM7.5 18c-.83 0-1.5-.67-1.5-1.5S6.67 15 7.5 15s1.5.67 1.5 1.5S8.33 18 7.5 18zm0-9C6.67 9 6 8.33 6 7.5S6.67 6 7.5 6 9 6.67 9 7.5 8.33 9 7.5 9zm4.5 4.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4.5 4.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm0-9c-.83 0-1.5-.67-1.5-1.5S15.67 6 16.5 6s1.5.67 1.5 1.5S17.33 9 16.5 9z"></path></svg>',
         'directions_car': '<svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"></path></svg>',
-        'local_parking': '<svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M13 3H6v18h4v-6h3c3.31 0 6-2.69 6-6s-2.69-6-6-6zm-2.5 8c-.83 0-1.5-.67-1.5-1.5S9.67 8 10.5 8s1.5.67 1.5 1.5S11.33 11 10.5 11zm3.5 1c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"></path></svg>',
-        'sports_kabaddi': '<svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"></path></svg>',
-        'gps_fixed': '<svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"></path></svg>'
+        'sports_kabaddi': '<svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M12 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm7 7.5c0-.83-.67-1.5-1.5-1.5S16 8.67 16 9.5 16.67 11 17.5 11s1.5-.67 1.5-1.5zm-2.99 4.5L14 17.5V23h2v-5l1-3 2 2v4h2v-5l-2.5-2.5c-.5-.5-1.17-.5-1.67 0L14 16l-1.5-1.5c-.5-.5-1.17-.5-1.67 0L8.5 17 7 16l-1.5 1.5L7 19l2.5-2.5L11 18l1-1.5 1.5 1.5L15 16.5l-1.5-1.5 1.51-1zM7.5 8C6.67 8 6 8.67 6 9.5S6.67 11 7.5 11 9 10.33 9 9.5 8.33 8 7.5 8z"></path></svg>',
+        'sports_soccer': '<svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"></path></svg>'
     };
-    return icons[iconType] || icons['sports_esports'];
+
+    return icons[iconType] || '<svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"></path></svg>';
 }
 
 // ===== SHOW HOMEPAGE =====
 function showHomepage() {
-    gamesView.classList.remove('active');
-    categoriesView.style.display = 'grid';
+    console.log('Showing homepage');
+    if (gamesView) {
+        gamesView.classList.remove('active');
+        gamesView.style.display = 'none';
+    }
+    if (categoriesView) {
+        categoriesView.style.display = 'grid';
+    }
 }
 
 // ===== NAVIGATE TO ASSIGNMENT =====
