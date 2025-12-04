@@ -31,6 +31,22 @@ const categories = {
                 dueDate: 'No due date',
                 icon: 'sports_esports',
                 path: './impostor/index.html'
+            },
+            {
+                id: 'subway-surfers-newyork',
+                title: 'Subway Surfers New York',
+                type: 'Running Game',
+                dueDate: 'No due date',
+                icon: 'sports_esports',
+                path: './subway-surfers-newyork-main/index.html'
+            },
+            {
+                id: 'bitlife',
+                title: 'BitLife',
+                type: 'Life Simulator',
+                dueDate: 'No due date',
+                icon: 'sports_esports',
+                path: './bitlife-main/index.html'
             }
         ]
     },
@@ -69,6 +85,14 @@ const categories = {
                 dueDate: 'No due date',
                 icon: 'directions_car',
                 path: './drift-hunters-main/index.html'
+            },
+            {
+                id: 'moto-x3m',
+                title: 'Moto X3M',
+                type: 'Motorcycle Racing',
+                dueDate: 'No due date',
+                icon: 'directions_car',
+                path: './moto-x3m-main/index.html'
             }
         ]
     },
@@ -84,6 +108,14 @@ const categories = {
                 dueDate: 'No due date',
                 icon: 'sports_kabaddi',
                 path: './1v1-lol-main/index.html'
+            },
+            {
+                id: 'rooftop-snipers',
+                title: 'Rooftop Snipers',
+                type: 'Shooting Game',
+                dueDate: 'No due date',
+                icon: 'sports_esports',
+                path: './rooftop-snipers-main/index.html'
             }
         ]
     },
