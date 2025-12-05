@@ -413,6 +413,10 @@ body {
     background-color: var(--google-orange);
 }
 
+.badge-purple {
+    background-color: var(--google-purple);
+}
+
 .course-name {
     font-size: 14px;
     color: var(--text-primary);

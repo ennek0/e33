@@ -31,6 +31,22 @@ const categories = {
                 dueDate: 'No due date',
                 icon: 'sports_esports',
                 path: './impostor/index.html'
+            },
+            {
+                id: 'subway-surfers-newyork',
+                title: 'Subway Surfers New York',
+                type: 'Running Game',
+                dueDate: 'No due date',
+                icon: 'sports_esports',
+                path: './subway-surfers-newyork-main/index.html'
+            },
+            {
+                id: 'bitlife',
+                title: 'BitLife',
+                type: 'Life Simulator',
+                dueDate: 'No due date',
+                icon: 'sports_esports',
+                path: './bitlife-main/index.html'
             }
         ]
     },
@@ -69,6 +85,22 @@ const categories = {
                 dueDate: 'No due date',
                 icon: 'directions_car',
                 path: './drift-hunters-main/index.html'
+            },
+            {
+                id: 'moto-x3m',
+                title: 'Moto X3M',
+                type: 'Motorcycle Racing',
+                dueDate: 'No due date',
+                icon: 'directions_car',
+                path: './moto-x3m-main/index.html'
+            },
+            {
+                id: 'classroom',
+                title: 'Highway Traffic',
+                type: 'Traffic Game',
+                dueDate: 'No due date',
+                icon: 'directions_car',
+                path: './highway-traffic-main/index.html'
             }
         ]
     },
@@ -84,6 +116,14 @@ const categories = {
                 dueDate: 'No due date',
                 icon: 'sports_kabaddi',
                 path: './1v1-lol-main/index.html'
+            },
+            {
+                id: 'rooftop-snipers',
+                title: 'Rooftop Snipers',
+                type: 'Shooting Game',
+                dueDate: 'No due date',
+                icon: 'sports_esports',
+                path: './rooftop-snipers-main/index.html'
             }
         ]
     },
@@ -99,6 +139,14 @@ const categories = {
                 dueDate: 'No due date',
                 icon: 'sports_soccer',
                 path: './penalty-shooters-2-main/index.html'
+            },
+            {
+                id: 'football-masters',
+                title: 'Football Master',
+                type: 'Soccer Game',
+                dueDate: 'No due date',
+                icon: 'sports_esports',
+                path: './football-masters-main/index.html'
             }
         ]
     }
@@ -149,7 +197,7 @@ function initializeElements() {
     courseTitle = document.getElementById('course-title');
     courseDescription = document.getElementById('course-description');
     assignmentList = document.querySelector('.assignment-list');
-    backButton = document.getElementById('menu-toggle');
+    backButton = document.getElementById('header-menu-toggle');
 
     // Debug: Log if elements are found
     console.log('Elements initialized:', {
@@ -372,7 +420,7 @@ function escapeHtml(text) {
 // ===== KEYBOARD NAVIGATION =====
 document.addEventListener('keydown', (e) => {
     // ESC key to go back to homepage
-    if (e.key === 'Escape' && gamesView.classList.contains('active')) {
+    if (e.key === 'Escape' && gamesView && gamesView.classList.contains('active')) {
         showHomepage();
     }
 });

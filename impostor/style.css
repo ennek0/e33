@@ -113,6 +113,7 @@ body {
     display: flex;
     gap: 12px;
     margin-bottom: 24px;
+    flex-wrap: wrap;
 }
 
 .input-group input {
@@ -580,44 +581,432 @@ body {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    .container {
+        padding: 40px 16px;
+    }
+
     .game-title {
-        font-size: 48px;
+        font-size: 40px;
+        letter-spacing: -1px;
+    }
+
+    .subtitle {
+        margin-bottom: 40px;
     }
 
     .screen-title {
-        font-size: 32px;
+        font-size: 28px;
+        margin-bottom: 6px;
+    }
+
+    .screen-subtitle {
+        font-size: 14px;
+        margin-bottom: 32px;
     }
 
     .setup-card {
-        padding: 32px 24px;
+        padding: 24px 20px;
+        margin: 0;
+    }
+
+    .setup-card h2 {
+        font-size: 24px;
+    }
+
+    .instruction {
+        font-size: 14px;
+        margin-bottom: 24px;
+    }
+
+    .input-group {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .input-group input {
+        padding: 16px;
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+
+    .btn {
+        padding: 16px 24px;
+        font-size: 16px;
+        min-height: 48px; /* Touch-friendly */
+    }
+
+    .btn-large {
+        padding: 18px;
+        font-size: 16px;
     }
 
     .cards-container {
         grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .card-wrapper {
+        height: 280px;
+    }
+
+    .card-face {
+        padding: 24px;
+    }
+
+    .card-player-name {
+        font-size: 18px;
+    }
+
+    .card-word {
+        font-size: 28px;
+    }
+
+    .card-hint {
+        font-size: 12px;
     }
 
     .timer-circle {
-        width: 220px;
-        height: 220px;
+        width: 200px;
+        height: 200px;
     }
 
     .timer-text {
-        font-size: 44px;
+        font-size: 40px;
+    }
+
+    .voting-cards-container {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 12px;
+    }
+
+    .voting-card {
+        padding: 24px 16px;
+    }
+
+    .voting-card-name {
+        font-size: 16px;
+    }
+
+    .result-card {
+        padding: 32px 20px;
+        margin: 0;
+    }
+
+    .result-icon {
+        font-size: 56px;
+        margin-bottom: 20px;
+    }
+
+    .result-title {
+        font-size: 24px;
+        margin-bottom: 12px;
+    }
+
+    .result-message {
+        font-size: 16px;
+        margin-bottom: 24px;
+    }
+
+    .mode-selection-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .mode-card {
+        padding: 32px 24px;
+    }
+
+    .mode-icon {
+        font-size: 48px;
+        margin-bottom: 16px;
+    }
+
+    .mode-title {
+        font-size: 20px;
+    }
+
+    .mode-description {
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    .single-card-container .card-wrapper {
+        max-width: 280px;
+    }
+
+    .player-progress,
+    .voting-progress {
+        font-size: 16px;
+    }
+
+    .player-tag {
+        padding: 10px 14px;
+        font-size: 14px;
+    }
+
+    .player-tag .remove-btn {
+        width: 20px;
+        height: 20px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 32px 12px;
+    }
+
+    .game-title {
+        font-size: 32px;
+    }
+
+    .setup-card {
+        padding: 20px 16px;
+    }
+
+    .setup-card h2 {
+        font-size: 20px;
+    }
+
+    .card-wrapper {
+        height: 240px;
+    }
+
+    .card-face {
+        padding: 20px;
+    }
+
+    .card-word {
+        font-size: 24px;
+    }
+
+    .timer-circle {
+        width: 160px;
+        height: 160px;
+    }
+
+    .timer-text {
+        font-size: 32px;
     }
 
     .voting-cards-container {
         grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .voting-card {
+        padding: 20px 16px;
     }
 
     .result-card {
-        padding: 40px 24px;
+        padding: 24px 16px;
     }
 
     .result-icon {
-        font-size: 64px;
+        font-size: 48px;
     }
 
     .result-title {
+        font-size: 20px;
+    }
+
+    .mode-card {
+        padding: 24px 20px;
+    }
+
+    .single-card-container .card-wrapper {
+        max-width: 240px;
+    }
+}
+
+/* Touch-friendly improvements */
+@media (hover: none) and (pointer: coarse) {
+    .card:hover {
+        transform: none;
+    }
+
+    .voting-card:hover {
+        transform: none;
+        border-color: #e5e5e5;
+    }
+
+    .mode-card:hover {
+        transform: none;
+        border-color: #e5e5e5;
+        box-shadow: none;
+    }
+
+    .btn:hover {
+        transform: none;
+    }
+
+    .card:active {
+        transform: scale(0.98);
+    }
+
+    .voting-card:active {
+        transform: scale(0.98);
+        border-color: #1a1a1a;
+    }
+
+    .mode-card:active {
+        transform: scale(0.98);
+        border-color: #1a1a1a;
+    }
+
+    .btn:active {
+        transform: scale(0.98);
+    }
+}
+
+/* Enhanced Mobile Optimizations */
+@media (max-width: 768px) {
+    /* Prevent zoom on input focus */
+    input[type="text"] {
+        font-size: 16px !important;
+    }
+    
+    /* Better touch targets */
+    .btn {
+        min-height: 48px;
+        min-width: 48px;
+    }
+    
+    .player-tag .remove-btn {
+        min-width: 32px;
+        min-height: 32px;
+    }
+    
+    /* Smooth scrolling for mobile */
+    body {
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Prevent text selection on mobile */
+    .card, .voting-card, .mode-card {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+    
+    /* Better card shadows for mobile */
+    .card, .voting-card, .mode-card {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Improved button spacing */
+    .btn-large {
+        margin-top: 32px;
+    }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+    /* Larger touch targets for small screens */
+    .btn {
+        min-height: 52px;
+        padding: 18px 24px;
+    }
+    
+    .player-tag .remove-btn {
+        min-width: 36px;
+        min-height: 36px;
+        font-size: 16px;
+    }
+    
+    /* Better spacing for voting cards */
+    .voting-card {
+        padding: 28px 20px;
+        min-height: 80px;
+    }
+    
+    /* Single column layout for better mobile experience */
+    .mode-selection-container {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+}
+
+/* Landscape mobile optimizations */
+@media (max-height: 600px) and (orientation: landscape) {
+    .container {
+        padding: 20px 16px;
+    }
+    
+    .game-title {
         font-size: 28px;
+        margin-bottom: 16px;
+    }
+    
+    .subtitle {
+        margin-bottom: 24px;
+    }
+    
+    .setup-card {
+        padding: 20px;
+    }
+    
+    .card-wrapper {
+        height: 200px;
+    }
+    
+    .timer-circle {
+        width: 140px;
+        height: 140px;
+    }
+    
+    .timer-text {
+        font-size: 28px;
+    }
+}
+
+/* Dark mode support for mobile */
+@media (prefers-color-scheme: dark) {
+    body {
+        background: #1a1a1a;
+        color: #ffffff;
+    }
+    
+    .background-animation {
+        background: #1a1a1a;
+    }
+    
+    .setup-card, .result-card, .card-face, .voting-card, .mode-card {
+        background: #2d2d2d;
+        border-color: #404040;
+        color: #ffffff;
+    }
+    
+    .card-front, .card-back {
+        background: #2d2d2d;
+    }
+    
+    .card-word, .card-player-name, .voting-card-name, .mode-title {
+        color: #ffffff;
+    }
+    
+    .input-group input {
+        background: #2d2d2d;
+        border-color: #404040;
+        color: #ffffff;
+    }
+    
+    .input-group input:focus {
+        background: #404040;
+        border-color: #ffffff;
+    }
+    
+    .timer-bg {
+        stroke: #404040;
+    }
+    
+    .timer-progress {
+        stroke: #ffffff;
+    }
+    
+    .timer-text {
+        color: #ffffff;
     }
 }

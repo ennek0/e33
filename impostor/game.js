@@ -12,31 +12,82 @@ const gameState = {
     eliminatedPlayers: [], // Track eliminated players
     timerInterval: null,
     timeRemaining: 300, // 5 minutes in seconds
-    selectedVote: null
+    selectedVote: null,
+    touchStartX: 0,
+    touchStartY: 0,
+    isMobile: false
 };
 
 // ===== WORD BANK =====
 const wordBank = [
     { word: 'Pizza', synonym: 'Comida Italiana' },
     { word: 'Guitarra', synonym: 'Instrumento Musical' },
-    { word: 'Océano', synonym: 'Gran Cuerpo de Agua' },
-    { word: 'Montaña', synonym: 'Gran Elevación' },
-    { word: 'Café', synonym: 'Bebida Caliente' },
-    { word: 'Baloncesto', synonym: 'Equipo Deportivo' },
-    { word: 'Avión', synonym: 'Vehículo Volador' },
-    { word: 'Teléfono', synonym: 'Dispositivo Móvil' },
-    { word: 'Arcoíris', synonym: 'Arco Colorido' },
-    { word: 'Mariposa', synonym: 'Insecto Volador' },
+    { word: 'Montaña', synonym: 'Altura' },
+    { word: 'Café', synonym: 'Postre' },
+    { word: 'Baloncesto', synonym: 'Deporte' },
+    { word: 'Avión', synonym: 'Volar' },
+    { word: 'Teléfono', synonym: 'Comunicacion' },
+    { word: 'Arcoíris', synonym: 'Color' },
+    { word: 'Mariposa', synonym: 'Insecto' },
     { word: 'Chocolate', synonym: 'Dulce' },
-    { word: 'Fuegos Artificiales', synonym: 'Espectáculo Explosivo' },
-    { word: 'Atardecer', synonym: 'Cielo Nocturno' },
+    { word: 'Fuegos Artificiales', synonym: 'Espectáculo' },
+    { word: 'Atardecer', synonym: 'Sol' },
     { word: 'Cámara', synonym: 'Dispositivo Fotográfico' },
-    { word: 'Bicicleta', synonym: 'Transporte de Dos Ruedas' },
-    { word: 'Faro', synonym: 'Torre Costera' },
-    { word: 'Telescopio', synonym: 'Instrumento de Observación' },
-    { word: 'Volcán', synonym: 'Montaña en Erupción' },
-    { word: 'Cascada', synonym: 'Agua en Cascada' },
-    { word: 'Castillo', synonym: 'Fortaleza Medieval' }
+    { word: 'Bicicleta', synonym: 'Deporte de dos ruedas' },
+    { word: 'Faro', synonym: 'Barcos' },
+    { word: 'Telescopio', synonym: 'Estrellas' },
+    { word: 'Volcán', synonym: 'Montaña' },
+    { word: 'Cascada', synonym: 'Rio' },
+    { word: 'Castillo', synonym: 'Medieval' },
+    { word: 'Helado', synonym: 'Postre' },
+    { word: 'Gato', synonym: 'Mascota' },
+    { word: 'Playa', synonym: 'Verano' },
+    { word: 'Libro', synonym: 'Paginas' },
+    { word: 'Reloj', synonym: 'Agujas' },
+    { word: 'Tren', synonym: 'Transporte' },
+    { word: 'Sombrero', synonym: 'Cabeza' },
+    { word: 'Estrella', synonym: 'Cielo' },
+    { word: 'Lago', synonym: 'Charco grande' },
+    { word: 'Pintura', synonym: 'Arte Visual' },
+    { word: 'Perro', synonym: 'Fiel' },
+    { word: 'Puente', synonym: 'Conexión/Estructura' },
+    { word: 'Avión de Papel', synonym: 'Manualidad' },
+    { word: 'Globos', synonym: 'Inflable' },
+    { word: 'Caracol', synonym: 'Casa en la espalda' },
+    { word: 'Maratón', synonym: 'Carrera' },
+    { word: 'Farol', synonym: 'Luz' },
+    { word: 'Piano', synonym: 'Teclas' },
+    { word: 'Barco', synonym: 'Mar' },
+    { word: 'Luna', synonym: 'Luz nocturna' },
+    { word: 'Jirafa', synonym: 'Animal Alto' },
+    { word: 'Helicóptero', synonym: 'Vuelo Vertical' },
+    { word: 'Nube', synonym: 'Gris' },
+    { word: 'Torre', synonym: 'Estructura Alta' },
+    { word: 'Carretera', synonym: 'Coches' },
+    { word: 'Camión', synonym: 'Transporte Pesado' },
+    { word: 'Parque', synonym: 'Niños/as' },
+    { word: 'Isla', synonym: 'Tierra Rodeada' },
+    { word: 'Sombrilla', synonym: 'Playa' },
+    { word: 'Cueva', synonym: 'Prehistoria' },
+    { word: 'Coche de Carreras', synonym: 'Deporte' },
+    { word: 'Trineo', synonym: 'Deslizamiento' },
+    { word: 'Castor', synonym: 'Dientes' },
+    { word: 'Puerta', synonym: 'Casa' },
+    { word: 'Ventana', synonym: 'Cristal' },
+    { word: 'Espada', synonym: 'Afilado' },
+    { word: 'Sombrero de Copa', synonym: 'Estilo Formal' },
+    { word: 'Molino', synonym: 'Viento' },
+    { word: 'Cinturón', synonym: 'Accesorio' },
+    { word: 'Pirámide', synonym: 'Egipto' },
+    { word: 'Balón', synonym: 'Deportes' },
+    { word: 'Gafas', synonym: 'Cristal' },
+    { word: 'Espejo', synonym: 'Reflejo' },
+    { word: 'Mapa', synonym: 'Mundo' },
+    { word: 'Linterna', synonym: 'Luz' },
+    { word: 'Fósil', synonym: 'Antiguos' },
+    { word: 'Paracaídas', synonym: 'Salto aereo' },
+    { word: 'Termómetro', synonym: 'Mide Temperatura' }
+    
 ];
 
 // ===== DOM ELEMENTS =====
@@ -53,6 +104,8 @@ let resultIcon, resultTitle, resultMessage, resultActionBtn;
 document.addEventListener('DOMContentLoaded', () => {
     initializeElements();
     setupEventListeners();
+    detectMobileDevice();
+    setupTouchGestures();
 });
 
 function initializeElements() {
@@ -125,6 +178,71 @@ function setupEventListeners() {
     nextVoterBtn.addEventListener('click', showNextVoter);
     finishVotingBtn.addEventListener('click', finishVoting);
     submitVoteBtn.addEventListener('click', submitVote);
+
+    // Keyboard navigation
+    document.addEventListener('keydown', handleKeyPress);
+}
+
+function detectMobileDevice() {
+    const userAgent = navigator.userAgent;
+    if (userAgent.match(/Android/i) || userAgent.match(/iPhone/i) || userAgent.match(/iPad/i)) {
+        gameState.isMobile = true;
+    }
+}
+
+function setupTouchGestures() {
+    if (gameState.isMobile) {
+        document.addEventListener('touchstart', (e) => {
+            gameState.touchStartX = e.touches[0].clientX;
+            gameState.touchStartY = e.touches[0].clientY;
+        });
+
+        document.addEventListener('touchmove', (e) => {
+            const touchEndX = e.touches[0].clientX;
+            const touchEndY = e.touches[0].clientY;
+
+            const distanceX = Math.abs(touchEndX - gameState.touchStartX);
+            const distanceY = Math.abs(touchEndY - gameState.touchStartY);
+
+            if (distanceX > distanceY && distanceX > 50) {
+                if (touchEndX < gameState.touchStartX) {
+                    // Swipe left
+                    handleSwipeLeft();
+                } else {
+                    // Swipe right
+                    handleSwipeRight();
+                }
+            }
+        });
+    }
+}
+
+function handleKeyPress(e) {
+    if (e.key === 'ArrowLeft') {
+        handleSwipeLeft();
+    } else if (e.key === 'ArrowRight') {
+        handleSwipeRight();
+    }
+}
+
+function handleSwipeLeft() {
+    // Navigate to next player or next voter
+    if (cardRevealScreen.classList.contains('active') && nextPlayerBtn.style.display !== 'none') {
+        showNextPlayer();
+    } else if (votingScreen.classList.contains('active') && nextVoterBtn.style.display !== 'none') {
+        showNextVoter();
+    }
+}
+
+function handleSwipeRight() {
+    // Navigate back (if implemented in future)
+    // For now, this can be used for undo functionality
+}
+
+function triggerHapticFeedback() {
+    if (gameState.isMobile && navigator.vibrate) {
+        navigator.vibrate(50);
+    }
 }
 
 // ===== PLAYER MANAGEMENT =====
@@ -201,6 +319,7 @@ function showModeSelection() {
 
 function selectGameMode(mode) {
     gameState.gameMode = mode;
+    triggerHapticFeedback();
     startGame();
 }
 
@@ -274,6 +393,7 @@ function markCardRevealed() {
     if (gameState.cardRevealed) return;
     
     gameState.cardRevealed = true;
+    triggerHapticFeedback();
     
     // Flip card back
     const card = currentPlayerCard.querySelector('.card');
@@ -418,6 +538,7 @@ function selectVote(playerIndex, cardElement) {
     // Add new selection
     cardElement.classList.add('selected');
     gameState.selectedVote = playerIndex;
+    triggerHapticFeedback();
     
     // Show appropriate navigation button
     const remainingVoters = gameState.players.filter((_, index) => 
