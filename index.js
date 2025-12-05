@@ -93,7 +93,6 @@ const categories = {
                 dueDate: 'No due date',
                 icon: 'directions_car',
                 path: './moto-x3m-main/index.html'
-<<<<<<< HEAD
             },
             {
                 id: 'classroom',
@@ -102,8 +101,6 @@ const categories = {
                 dueDate: 'No due date',
                 icon: 'directions_car',
                 path: './highway-traffic-main/index.html'
-=======
->>>>>>> 0f9755d9ec7addb3ca6cdb226a510796a4d986b8
             }
         ]
     },
@@ -228,15 +225,53 @@ function setupEventListeners() {
         });
     });
 
-    // Menu Toggle: Show/hide sidebar
+    // Menu Toggle: Show/hide sidebar with mobile overlay
     const menuToggles = document.querySelectorAll('.menu-button');
     const leftSidebar = document.querySelector('.sidebar');
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
+    
     menuToggles.forEach(menuToggle => {
         if (menuToggle && leftSidebar) {
             menuToggle.addEventListener('click', () => {
                 console.log('Menu toggle clicked');
-                leftSidebar.classList.toggle('open');
+                const isOpen = leftSidebar.classList.toggle('open');
+                
+                // Show/hide overlay on mobile
+                if (sidebarOverlay) {
+                    if (window.innerWidth <= 768) {
+                        sidebarOverlay.classList.toggle('active', isOpen);
+                    }
+                }
             });
+        }
+    });
+
+    // Sidebar overlay click to close
+    if (sidebarOverlay) {
+        sidebarOverlay.addEventListener('click', () => {
+            leftSidebar.classList.remove('open');
+            sidebarOverlay.classList.remove('active');
+        });
+    }
+
+    // Close sidebar on escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && leftSidebar && leftSidebar.classList.contains('open')) {
+            leftSidebar.classList.remove('open');
+            if (sidebarOverlay) {
+                sidebarOverlay.classList.remove('active');
+            }
+        }
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
+            // Reset sidebar state on desktop
+            leftSidebar.classList.remove('open');
+            if (sidebarOverlay) {
+                sidebarOverlay.classList.remove('active');
+            }
         }
     });
 
