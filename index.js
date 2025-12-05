@@ -93,6 +93,7 @@ const categories = {
                 dueDate: 'No due date',
                 icon: 'directions_car',
                 path: './moto-x3m-main/index.html'
+<<<<<<< HEAD
             },
             {
                 id: 'classroom',
@@ -101,6 +102,8 @@ const categories = {
                 dueDate: 'No due date',
                 icon: 'directions_car',
                 path: './highway-traffic-main/index.html'
+=======
+>>>>>>> 0f9755d9ec7addb3ca6cdb226a510796a4d986b8
             }
         ]
     },
