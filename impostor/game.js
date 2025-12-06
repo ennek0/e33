@@ -157,10 +157,20 @@ function initializeElements() {
 function setupEventListeners() {
     // Setup Screen
     addPlayerBtn.addEventListener('click', addPlayer);
+    addPlayerBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        addPlayer();
+    }, { passive: false });
+    
     playerNameInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') addPlayer();
     });
+    
     startGameBtn.addEventListener('click', showModeSelection);
+    startGameBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        showModeSelection();
+    }, { passive: false });
 
     // Mode Selection Screen
     document.querySelectorAll('.mode-card').forEach(card => {
@@ -175,15 +185,42 @@ function setupEventListeners() {
 
     // Card Reveal Screen
     nextPlayerBtn.addEventListener('click', showNextPlayer);
+    nextPlayerBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        showNextPlayer();
+    }, { passive: false });
+    
     continueToRoundBtn.addEventListener('click', startRound);
+    continueToRoundBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        startRound();
+    }, { passive: false });
 
     // Game Round Screen
     endRoundBtn.addEventListener('click', endRound);
+    endRoundBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        endRound();
+    }, { passive: false });
 
     // Voting Screen
     nextVoterBtn.addEventListener('click', showNextVoter);
+    nextVoterBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        showNextVoter();
+    }, { passive: false });
+    
     finishVotingBtn.addEventListener('click', finishVoting);
+    finishVotingBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        finishVoting();
+    }, { passive: false });
+    
     submitVoteBtn.addEventListener('click', submitVote);
+    submitVoteBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        submitVote();
+    }, { passive: false });
 
     // Keyboard navigation
     document.addEventListener('keydown', handleKeyPress);
@@ -296,6 +333,15 @@ function updatePlayersList() {
             <span>${escapeHtml(player)}</span>
             <button class="remove-btn" onclick="removePlayer(${index})">×</button>
         `;
+        
+        // Add touch event to remove button for mobile compatibility
+        const removeBtn = tag.querySelector('.remove-btn');
+        removeBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            removePlayer(index);
+        }, { passive: false });
+        
         playersListDiv.appendChild(tag);
     });
 }
@@ -409,6 +455,18 @@ function showCurrentPlayerCard() {
             triggerHapticFeedback();
         }
     }, { passive: false });
+    
+    // Add touch event to the ready button
+    const readyBtn = currentPlayerCard.querySelector('.card-ready-btn');
+    if (readyBtn) {
+        readyBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (!gameState.cardRevealed) {
+                markCardRevealed();
+            }
+        }, { passive: false });
+    }
 }
 
 function markCardRevealed() {
@@ -645,6 +703,12 @@ function showEliminationResult(wasImpostor, eliminatedPlayer) {
         resultActionBtn.textContent = 'Siguiente Ronda';
         resultActionBtn.onclick = startNextRound;
     }
+    
+    // Add touch event for result action button
+    resultActionBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        resultActionBtn.click();
+    }, { passive: false });
     
     switchScreen(resultScreen);
 }
