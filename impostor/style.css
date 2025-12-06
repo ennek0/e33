@@ -549,6 +549,24 @@ body {
     width: 100%;
 }
 
+/* Mobile touch improvements */
+@media (max-width: 768px) {
+    .single-card-container .card-wrapper {
+        max-width: 340px;
+        width: 100%;
+        height: 300px;
+    }
+    
+    .card {
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    .card:active {
+        transform: scale(0.98);
+    }
+}
+
 /* Card Navigation */
 .card-navigation {
     text-align: center;
@@ -889,6 +907,7 @@ body {
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
+        -webkit-touch-callout: none;
     }
     
     /* Better card shadows for mobile */
@@ -899,6 +918,15 @@ body {
     /* Improved button spacing */
     .btn-large {
         margin-top: 32px;
+    }
+    
+    /* Enhanced touch feedback */
+    .card, .voting-card, .mode-card {
+        transition: transform 0.1s ease;
+    }
+    
+    .card:active, .voting-card:active, .mode-card:active {
+        transform: scale(0.96);
     }
 }
 

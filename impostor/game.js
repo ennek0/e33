@@ -165,6 +165,12 @@ function setupEventListeners() {
     // Mode Selection Screen
     document.querySelectorAll('.mode-card').forEach(card => {
         card.addEventListener('click', () => selectGameMode(card.dataset.mode));
+        
+        // Add touch event for mobile compatibility
+        card.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            selectGameMode(card.dataset.mode);
+        }, { passive: false });
     });
 
     // Card Reveal Screen
@@ -185,9 +191,11 @@ function setupEventListeners() {
 
 function detectMobileDevice() {
     const userAgent = navigator.userAgent;
-    if (userAgent.match(/Android/i) || userAgent.match(/iPhone/i) || userAgent.match(/iPad/i)) {
-        gameState.isMobile = true;
-    }
+    const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile/i.test(userAgent);
+    const hasTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
+    const isSmallScreen = window.innerWidth <= 768;
+    
+    gameState.isMobile = isMobileDevice || (hasTouchScreen && isSmallScreen);
 }
 
 function setupTouchGestures() {
@@ -378,13 +386,29 @@ function showCurrentPlayerCard() {
     nextPlayerBtn.style.display = 'none';
     continueToRoundBtn.style.display = 'none';
     
-    // Add click to flip
+    // Add click and touch to flip with proper mobile handling
     const card = currentPlayerCard.querySelector('.card');
-    card.addEventListener('click', (e) => {
+    
+    // Handle both click and touch events for mobile compatibility
+    const flipCard = (e) => {
+        e.preventDefault();
         if (!card.classList.contains('flipped') && !gameState.cardRevealed) {
             card.classList.add('flipped');
+            triggerHapticFeedback();
         }
-    });
+    };
+    
+    // Add click event for desktop
+    card.addEventListener('click', flipCard);
+    
+    // Add touch events for mobile with proper handling
+    card.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        if (!card.classList.contains('flipped') && !gameState.cardRevealed) {
+            card.classList.add('flipped');
+            triggerHapticFeedback();
+        }
+    }, { passive: false });
 }
 
 function markCardRevealed() {
@@ -523,6 +547,13 @@ function showCurrentVoter() {
         `;
         
         card.addEventListener('click', () => selectVote(index, card));
+        
+        // Add touch event for mobile compatibility
+        card.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            selectVote(index, card);
+        }, { passive: false });
+        
         votingCardsContainer.appendChild(card);
     });
     
