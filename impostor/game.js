@@ -422,7 +422,7 @@ function showCurrentPlayerCard() {
                 <div class="card-player-name">${escapeHtml(currentPlayer)}</div>
                 <div class="card-word ${isImpostor ? 'impostor' : ''}">${isImpostor ? 'IMPOSTOR' : escapeHtml(gameState.currentWord)}</div>
                 ${isImpostor && gameState.gameMode === 'with-hints' ? `<div class="card-hint">Pista: ${escapeHtml(gameState.impostorSynonym)}</div>` : ''}
-                <button class="btn btn-primary card-ready-btn" onclick="markCardRevealed()">Verificado</button>
+                <button class="btn btn-primary card-ready-btn">Verificado</button>
             </div>
         </div>
     `;
@@ -456,9 +456,18 @@ function showCurrentPlayerCard() {
         }
     }, { passive: false });
     
-    // Add touch event to the ready button
+    // Add proper event listeners to the ready button
     const readyBtn = currentPlayerCard.querySelector('.card-ready-btn');
     if (readyBtn) {
+        // Click event for desktop
+        readyBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (!gameState.cardRevealed) {
+                markCardRevealed();
+            }
+        });
+        
+        // Touch event for mobile
         readyBtn.addEventListener('touchstart', (e) => {
             e.preventDefault();
             e.stopPropagation();
