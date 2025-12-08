@@ -49,6 +49,14 @@ const categories = {
                 dueDate: 'No due date',
                 icon: 'sports_esports',
                 path: './bitlife-main/index.html'
+            },
+            {
+                id: 'slope',
+                title: 'Slope',
+                type: 'Endless Runner',
+                dueDate: 'No due date',
+                icon: 'sports_esports',
+                path: './slope-main/index.html'
             }
         ]
     },
@@ -103,6 +111,14 @@ const categories = {
                 dueDate: 'No due date',
                 icon: 'directions_car',
                 path: './highway-traffic-main/index.html'
+            },
+            {
+                id: 'rocket-soccer-derby',
+                title: 'Rocket Soccer Derby',
+                type: 'Soccer Racing',
+                dueDate: 'No due date',
+                icon: 'directions_car',
+                path: './rocket-soccer-derby-main/index.html'
             }
         ]
     },
