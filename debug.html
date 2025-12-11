@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug - Classroom</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+</head>
+
+<body>
+    <h1 style="padding: 20px; background: white; margin: 0;">Debug Page</h1>
+    <div style="padding: 20px; background: white; margin: 20px;">
+        <h2>Test Buttons</h2>
+        <button onclick="testShowSection()"
+            style="padding: 10px 20px; margin: 5px; background: #1967d2; color: white; border: none; border-radius: 4px; cursor: pointer;">Show
+            E33 Section</button>
+        <button onclick="testShowHomepage()"
+            style="padding: 10px 20px; margin: 5px; background: #1e8e3e; color: white; border: none; border-radius: 4px; cursor: pointer;">Show
+            Homepage</button>
+        <button onclick="testToggleSidebar()"
+            style="padding: 10px 20px; margin: 5px; background: #e37400; color: white; border: none; border-radius: 4px; cursor: pointer;">Toggle
+            Sidebar</button>
+        <button onclick="checkElements()"
+            style="padding: 10px 20px; margin: 5px; background: #9334e6; color: white; border: none; border-radius: 4px; cursor: pointer;">Check
+            Elements</button>
+    </div>
+
+    <div style="padding: 20px; background: white; margin: 20px;">
+        <h2>Console Output</h2>
+        <div id="console-output"
+            style="background: #f1f3f4; padding: 15px; border-radius: 4px; font-family: monospace; font-size: 12px; max-height: 300px; overflow-y: auto;">
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+    <script>
+        // Capture console.log
+        const consoleOutput = document.getElementById('console-output');
+        const originalLog = console.log;
+        const originalError = console.error;
+
+        console.log = function (...args) {
+            originalLog.apply(console, args);
+            const message = args.map(arg => typeof arg === 'object' ? JSON.stringify(arg, null, 2) : arg).join(' ');
+            consoleOutput.innerHTML += `<div style="color: #1967d2; margin-bottom: 5px;">[LOG] ${message}</div>`;
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        };
+
+        console.error = function (...args) {
+            originalError.apply(console, args);
+            const message = args.map(arg => typeof arg === 'object' ? JSON.stringify(arg, null, 2) : arg).join(' ');
+            consoleOutput.innerHTML += `<div style="color: #d93025; margin-bottom: 5px;">[ERROR] ${message}</div>`;
+            consoleOutput.scrollHeight;
+        };
+
+        function testShowSection() {
+            console.log('=== Testing showSection("e33") ===');
+            if (typeof showSection === 'function') {
+                showSection('e33');
+            } else {
+                console.error('showSection function not found!');
+            }
+        }
+
+        function testShowHomepage() {
+            console.log('=== Testing showHomepage() ===');
+            if (typeof showHomepage === 'function') {
+                showHomepage();
+            } else {
+                console.error('showHomepage function not found!');
+            }
+        }
+
+        function testToggleSidebar() {
+            console.log('=== Testing sidebar toggle ===');
+            const sidebar = document.querySelector('.sidebar');
+            if (sidebar) {
+                sidebar.classList.toggle('open');
+                console.log('Sidebar classes:', sidebar.className);
+            } else {
+                console.error('Sidebar not found!');
+            }
+        }
+
+        function checkElements() {
+            console.log('=== Checking Elements ===');
+            const elements = {
+                'categories-view': document.getElementById('categories-view'),
+                'course-view': document.getElementById('course-view'),
+                'course-title': document.getElementById('course-title'),
+                'course-description': document.getElementById('course-description'),
+                '.assignment-list': document.querySelector('.assignment-list'),
+                '.sidebar': document.querySelector('.sidebar'),
+                '.homepage-card': document.querySelectorAll('.homepage-card').length + ' cards'
+            };
+
+            for (const [name, element] of Object.entries(elements)) {
+                if (element) {
+                    console.log(`✓ ${name}: Found`);
+                } else {
+                    console.error(`✗ ${name}: NOT FOUND`);
+                }
+            }
+        }
+
+        // Auto-check on load
+        setTimeout(() => {
+            console.log('=== Page Loaded ===');
+            checkElements();
+        }, 500);
+    </script>
+</body>
+
+</html>

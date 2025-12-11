@@ -1,0 +1,1040 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f5f5f5;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Background - Minimal */
+.background-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #f5f5f5;
+    z-index: -1;
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 20px;
+}
+
+/* Screen Management */
+.screen {
+    display: none;
+    min-height: 100vh;
+}
+
+.screen.active {
+    display: block;
+}
+
+/* Game Title */
+.game-title {
+    text-align: center;
+    font-size: 64px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #1a1a1a;
+    letter-spacing: -2px;
+}
+
+.title-impostor {
+    display: block;
+}
+
+.subtitle {
+    text-align: center;
+    color: #666;
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 60px;
+    letter-spacing: 0.5px;
+}
+
+.screen-title {
+    text-align: center;
+    color: #1a1a1a;
+    font-size: 40px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    letter-spacing: -1px;
+}
+
+.screen-subtitle {
+    text-align: center;
+    color: #666;
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 50px;
+}
+
+/* Setup Card */
+.setup-card {
+    background: white;
+    border-radius: 16px;
+    padding: 48px;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
+    max-width: 600px;
+    margin: 0 auto;
+    border: 1px solid #e5e5e5;
+}
+
+.setup-card h2 {
+    color: #1a1a1a;
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    text-align: center;
+    letter-spacing: -0.5px;
+}
+
+.instruction {
+    color: #666;
+    text-align: center;
+    margin-bottom: 32px;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+/* Input Group */
+.input-group {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+
+.input-group input {
+    flex: 1;
+    padding: 14px 18px;
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    font-size: 15px;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.2s ease;
+    background: #fafafa;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #1a1a1a;
+    background: white;
+}
+
+/* Buttons */
+.btn {
+    padding: 14px 24px;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn-primary {
+    background: #1a1a1a;
+    color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: #000;
+}
+
+.btn-success {
+    background: #1a1a1a;
+    color: white;
+}
+
+.btn-success:hover:not(:disabled) {
+    background: #000;
+}
+
+.btn-danger {
+    background: #1a1a1a;
+    color: white;
+}
+
+.btn-danger:hover:not(:disabled) {
+    background: #000;
+}
+
+.btn-large {
+    width: 100%;
+    padding: 16px;
+    font-size: 16px;
+    margin-top: 24px;
+}
+
+/* Player Count */
+.player-count {
+    text-align: center;
+    color: #666;
+    font-weight: 500;
+    margin-bottom: 12px;
+    font-size: 15px;
+}
+
+/* Error Message */
+.error-message {
+    color: #ff4444;
+    text-align: center;
+    margin-bottom: 12px;
+    font-weight: 400;
+    min-height: 20px;
+    font-size: 14px;
+}
+
+/* Players List */
+.players-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 24px;
+    min-height: 50px;
+}
+
+.player-tag {
+    background: #1a1a1a;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 400;
+    font-size: 14px;
+    animation: slideIn 0.2s ease;
+}
+
+.player-tag .remove-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    transition: background 0.2s ease;
+}
+
+.player-tag .remove-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Cards Container */
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+/* Card */
+.card-wrapper {
+    perspective: 1000px;
+    height: 320px;
+}
+
+.card {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease;
+    cursor: pointer;
+}
+
+.card.flipped {
+    transform: rotateY(180deg);
+    cursor: default;
+}
+
+.card-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+    border: 1px solid #e5e5e5;
+}
+
+.card-front {
+    background: white;
+    color: #1a1a1a;
+}
+
+.card-back {
+    background: white;
+    transform: rotateY(180deg);
+}
+
+.card-player-name {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #1a1a1a;
+}
+
+.card-word {
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    text-align: center;
+    color: #1a1a1a;
+    letter-spacing: -1px;
+}
+
+.card-word.impostor {
+    color: #ff4444;
+}
+
+.card-hint {
+    font-size: 13px;
+    color: #666;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.card-ready-btn {
+    margin-top: auto;
+}
+
+.card-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+/* Ready Status */
+.ready-status {
+    text-align: center;
+    color: #1a1a1a;
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 24px;
+}
+
+/* Timer Container */
+.timer-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.timer-circle {
+    position: relative;
+    width: 280px;
+    height: 280px;
+}
+
+.timer-svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.timer-bg {
+    fill: none;
+    stroke: #e5e5e5;
+    stroke-width: 8;
+}
+
+.timer-progress {
+    fill: none;
+    stroke: #1a1a1a;
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-dasharray: 565.48;
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 1s linear;
+}
+
+.timer-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #1a1a1a;
+    font-size: 56px;
+    font-weight: 600;
+    letter-spacing: -2px;
+}
+
+/* Voting Cards */
+.voting-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 40px;
+}
+
+.voting-card {
+    background: white;
+    border-radius: 12px;
+    padding: 32px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 2px solid #e5e5e5;
+}
+
+.voting-card:hover {
+    transform: translateY(-2px);
+    border-color: #1a1a1a;
+}
+
+.voting-card.selected {
+    border-color: #1a1a1a;
+    background: #fafafa;
+}
+
+.voting-card-name {
+    font-size: 18px;
+    font-weight: 500;
+    color: #1a1a1a;
+}
+
+/* Result Card */
+.result-card {
+    background: white;
+    border-radius: 16px;
+    padding: 60px 40px;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e5e5e5;
+}
+
+.result-icon {
+    font-size: 80px;
+    margin-bottom: 24px;
+}
+
+.result-icon.success::before {
+    content: '✓';
+    color: #1a1a1a;
+}
+
+.result-icon.failure::before {
+    content: '✗';
+    color: #ff4444;
+}
+
+.result-title {
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #1a1a1a;
+    letter-spacing: -1px;
+}
+
+.result-message {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 32px;
+    line-height: 1.6;
+}
+
+/* Mode Selection */
+.mode-selection-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 32px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.mode-card {
+    background: white;
+    border-radius: 16px;
+    padding: 40px 32px;
+    text-align: center;
+    border: 2px solid #e5e5e5;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.mode-card:hover {
+    transform: translateY(-4px);
+    border-color: #1a1a1a;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+.mode-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+}
+
+.mode-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #1a1a1a;
+    letter-spacing: -0.5px;
+}
+
+.mode-description {
+    font-size: 15px;
+    color: #666;
+    margin-bottom: 24px;
+    line-height: 1.5;
+}
+
+.mode-btn {
+    width: 100%;
+    padding: 14px 24px;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+/* Single Card Container */
+.single-card-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.single-card-container .card-wrapper {
+    max-width: 320px;
+    width: 100%;
+}
+
+/* Mobile touch improvements */
+@media (max-width: 768px) {
+    .single-card-container .card-wrapper {
+        max-width: 340px;
+        width: 100%;
+        height: 300px;
+    }
+    
+    .card {
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    .card:active {
+        transform: scale(0.98);
+    }
+}
+
+/* Card Navigation */
+.card-navigation {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+/* Player Progress */
+.player-progress {
+    text-align: center;
+    color: #1a1a1a;
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 24px;
+}
+
+/* Voting Progress */
+.voting-progress {
+    text-align: center;
+    color: #1a1a1a;
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 24px;
+}
+
+/* Voting Navigation */
+.voting-navigation {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 40px 16px;
+    }
+
+    .game-title {
+        font-size: 40px;
+        letter-spacing: -1px;
+    }
+
+    .subtitle {
+        margin-bottom: 40px;
+    }
+
+    .screen-title {
+        font-size: 28px;
+        margin-bottom: 6px;
+    }
+
+    .screen-subtitle {
+        font-size: 14px;
+        margin-bottom: 32px;
+    }
+
+    .setup-card {
+        padding: 24px 20px;
+        margin: 0;
+    }
+
+    .setup-card h2 {
+        font-size: 24px;
+    }
+
+    .instruction {
+        font-size: 14px;
+        margin-bottom: 24px;
+    }
+
+    .input-group {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .input-group input {
+        padding: 16px;
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+
+    .btn {
+        padding: 16px 24px;
+        font-size: 16px;
+        min-height: 48px; /* Touch-friendly */
+    }
+
+    .btn-large {
+        padding: 18px;
+        font-size: 16px;
+    }
+
+    .cards-container {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .card-wrapper {
+        height: 280px;
+    }
+
+    .card-face {
+        padding: 24px;
+    }
+
+    .card-player-name {
+        font-size: 18px;
+    }
+
+    .card-word {
+        font-size: 28px;
+    }
+
+    .card-hint {
+        font-size: 12px;
+    }
+
+    .timer-circle {
+        width: 200px;
+        height: 200px;
+    }
+
+    .timer-text {
+        font-size: 40px;
+    }
+
+    .voting-cards-container {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 12px;
+    }
+
+    .voting-card {
+        padding: 24px 16px;
+    }
+
+    .voting-card-name {
+        font-size: 16px;
+    }
+
+    .result-card {
+        padding: 32px 20px;
+        margin: 0;
+    }
+
+    .result-icon {
+        font-size: 56px;
+        margin-bottom: 20px;
+    }
+
+    .result-title {
+        font-size: 24px;
+        margin-bottom: 12px;
+    }
+
+    .result-message {
+        font-size: 16px;
+        margin-bottom: 24px;
+    }
+
+    .mode-selection-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .mode-card {
+        padding: 32px 24px;
+    }
+
+    .mode-icon {
+        font-size: 48px;
+        margin-bottom: 16px;
+    }
+
+    .mode-title {
+        font-size: 20px;
+    }
+
+    .mode-description {
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    .single-card-container .card-wrapper {
+        max-width: 280px;
+    }
+
+    .player-progress,
+    .voting-progress {
+        font-size: 16px;
+    }
+
+    .player-tag {
+        padding: 10px 14px;
+        font-size: 14px;
+    }
+
+    .player-tag .remove-btn {
+        width: 20px;
+        height: 20px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 32px 12px;
+    }
+
+    .game-title {
+        font-size: 32px;
+    }
+
+    .setup-card {
+        padding: 20px 16px;
+    }
+
+    .setup-card h2 {
+        font-size: 20px;
+    }
+
+    .card-wrapper {
+        height: 240px;
+    }
+
+    .card-face {
+        padding: 20px;
+    }
+
+    .card-word {
+        font-size: 24px;
+    }
+
+    .timer-circle {
+        width: 160px;
+        height: 160px;
+    }
+
+    .timer-text {
+        font-size: 32px;
+    }
+
+    .voting-cards-container {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .voting-card {
+        padding: 20px 16px;
+    }
+
+    .result-card {
+        padding: 24px 16px;
+    }
+
+    .result-icon {
+        font-size: 48px;
+    }
+
+    .result-title {
+        font-size: 20px;
+    }
+
+    .mode-card {
+        padding: 24px 20px;
+    }
+
+    .single-card-container .card-wrapper {
+        max-width: 240px;
+    }
+}
+
+/* Touch-friendly improvements */
+@media (hover: none) and (pointer: coarse) {
+    .card:hover {
+        transform: none;
+    }
+
+    .voting-card:hover {
+        transform: none;
+        border-color: #e5e5e5;
+    }
+
+    .mode-card:hover {
+        transform: none;
+        border-color: #e5e5e5;
+        box-shadow: none;
+    }
+
+    .btn:hover {
+        transform: none;
+    }
+
+    .card:active {
+        transform: scale(0.98);
+    }
+
+    .voting-card:active {
+        transform: scale(0.98);
+        border-color: #1a1a1a;
+    }
+
+    .mode-card:active {
+        transform: scale(0.98);
+        border-color: #1a1a1a;
+    }
+
+    .btn:active {
+        transform: scale(0.98);
+    }
+}
+
+/* Enhanced Mobile Optimizations */
+@media (max-width: 768px) {
+    /* Prevent zoom on input focus */
+    input[type="text"] {
+        font-size: 16px !important;
+    }
+    
+    /* Better touch targets */
+    .btn {
+        min-height: 48px;
+        min-width: 48px;
+    }
+    
+    .player-tag .remove-btn {
+        min-width: 32px;
+        min-height: 32px;
+    }
+    
+    /* Smooth scrolling for mobile */
+    body {
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Prevent text selection on mobile */
+    .card, .voting-card, .mode-card {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-touch-callout: none;
+    }
+    
+    /* Better card shadows for mobile */
+    .card, .voting-card, .mode-card {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Improved button spacing */
+    .btn-large {
+        margin-top: 32px;
+    }
+    
+    /* Enhanced touch feedback */
+    .card, .voting-card, .mode-card {
+        transition: transform 0.1s ease;
+    }
+    
+    .card:active, .voting-card:active, .mode-card:active {
+        transform: scale(0.96);
+    }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+    /* Larger touch targets for small screens */
+    .btn {
+        min-height: 52px;
+        padding: 18px 24px;
+    }
+    
+    .player-tag .remove-btn {
+        min-width: 36px;
+        min-height: 36px;
+        font-size: 16px;
+    }
+    
+    /* Better spacing for voting cards */
+    .voting-card {
+        padding: 28px 20px;
+        min-height: 80px;
+    }
+    
+    /* Single column layout for better mobile experience */
+    .mode-selection-container {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+}
+
+/* Landscape mobile optimizations */
+@media (max-height: 600px) and (orientation: landscape) {
+    .container {
+        padding: 20px 16px;
+    }
+    
+    .game-title {
+        font-size: 28px;
+        margin-bottom: 16px;
+    }
+    
+    .subtitle {
+        margin-bottom: 24px;
+    }
+    
+    .setup-card {
+        padding: 20px;
+    }
+    
+    .card-wrapper {
+        height: 200px;
+    }
+    
+    .timer-circle {
+        width: 140px;
+        height: 140px;
+    }
+    
+    .timer-text {
+        font-size: 28px;
+    }
+}
+
+/* Dark mode support for mobile */
+@media (prefers-color-scheme: dark) {
+    body {
+        background: #1a1a1a;
+        color: #ffffff;
+    }
+    
+    .background-animation {
+        background: #1a1a1a;
+    }
+    
+    .setup-card, .result-card, .card-face, .voting-card, .mode-card {
+        background: #2d2d2d;
+        border-color: #404040;
+        color: #ffffff;
+    }
+    
+    .card-front, .card-back {
+        background: #2d2d2d;
+    }
+    
+    .card-word, .card-player-name, .voting-card-name, .mode-title {
+        color: #ffffff;
+    }
+    
+    .input-group input {
+        background: #2d2d2d;
+        border-color: #404040;
+        color: #ffffff;
+    }
+    
+    .input-group input:focus {
+        background: #404040;
+        border-color: #ffffff;
+    }
+    
+    .timer-bg {
+        stroke: #404040;
+    }
+    
+    .timer-progress {
+        stroke: #ffffff;
+    }
+    
+    .timer-text {
+        color: #ffffff;
+    }
+}

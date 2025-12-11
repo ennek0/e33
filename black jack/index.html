@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Premium Blackjack game with betting system. Start with €500 and bet between €1-€10,000. Test your luck against the dealer!">
+    <meta name="keywords" content="blackjack, 21, card game, casino, betting, gambling">
+    <title>Classroom</title>
+    <link rel="icon" type="image/png" href="../imagenes/classroom1.png">
+    <link rel="stylesheet" href="style.css">
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="24ce6f90-cf88-4c32-8315-a5d2c473428f"></script>
+    <script src="../analytics.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>♠ Blackjack ♥</h1>
+            <p class="subtitle">By E33</p>
+        </header>
+
+        <div class="game-container">
+            <!-- Message Display -->
+            <div id="message-container"></div>
+
+            <!-- Balance Display -->
+            <div class="balance-container">
+                <div class="balance-item">
+                    <span class="balance-label">Balance</span>
+                    <span class="balance-value" id="balance">€500</span>
+                </div>
+                <div class="balance-item">
+                    <span class="balance-label">Current Bet</span>
+                    <span class="bet-value" id="current-bet">€0</span>
+                </div>
+            </div>
+
+            <!-- Betting Section -->
+            <div class="betting-section" id="betting-section">
+                <div class="betting-controls">
+                    <div class="input-group">
+                        <label for="bet-input">Place Your Bet (€1 - €10,000)</label>
+                        <input type="number" id="bet-input" min="1" max="10000" step="1" placeholder="Enter bet amount"
+                            value="10">
+                    </div>
+                    <button class="btn btn-primary" id="deal-btn">Deal Cards</button>
+                </div>
+                <div class="quick-bets">
+                    <button class="quick-bet-btn" data-amount="10">€10</button>
+                    <button class="quick-bet-btn" data-amount="50">€50</button>
+                    <button class="quick-bet-btn" data-amount="100">€100</button>
+                    <button class="quick-bet-btn" data-amount="500">€500</button>
+                    <button class="quick-bet-btn" data-amount="1000">€1,000</button>
+                </div>
+            </div>
+
+            <!-- Game Board -->
+            <div class="game-board">
+                <!-- Dealer's Hand -->
+                <div class="hand-container">
+                    <div class="hand-label">
+                        Dealer's Hand
+                        <span class="hand-value hidden" id="dealer-value">0</span>
+                    </div>
+                    <div class="cards" id="dealer-cards"></div>
+                </div>
+
+                <!-- Player's Hand -->
+                <div class="hand-container">
+                    <div class="hand-label">
+                        Your Hand
+                        <span class="hand-value hidden" id="player-value">0</span>
+                    </div>
+                    <div class="cards" id="player-cards"></div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="actions hidden" id="game-actions">
+                <button class="btn btn-success" id="hit-btn">Hit</button>
+                <button class="btn btn-danger" id="stand-btn">Stand</button>
+                <button class="btn btn-secondary" id="double-btn">Double Down</button>
+            </div>
+
+            <!-- New Game Button -->
+            <div class="actions hidden" id="new-game-section">
+                <button class="btn btn-primary" id="new-game-btn">New Game</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+
+</html>

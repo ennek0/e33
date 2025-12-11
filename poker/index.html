@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classroom</title>
+    <link rel="icon" type="image/png" href="../imagenes/classroom1.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="24ce6f90-cf88-4c32-8315-a5d2c473428f"></script>
+    <script src="../analytics.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="title">♠️ Classroom Poker ♥️</h1>
+                <p class="subtitle">Texas Hold'em</p>
+            </div>
+            <div class="chips-display">
+                <div class="chip-icon">🪙</div>
+                <span id="player-chips">1000</span>
+            </div>
+        </header>
+
+        <!-- Game Area -->
+        <div class="game-area">
+            <!-- AI Players Section -->
+            <div class="ai-players-section">
+                <div class="ai-player" id="ai-player-1">
+                    <div class="player-info">
+                        <span class="player-label">AI Player 1</span>
+                        <div class="player-cards" id="ai1-cards"></div>
+                        <div class="hand-value" id="ai1-hand"></div>
+                        <div class="chips-display">
+                            <div class="chip-icon">🪙</div>
+                            <span id="ai1-chips">1000</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="ai-player" id="ai-player-2">
+                    <div class="player-info">
+                        <span class="player-label">AI Player 2</span>
+                        <div class="player-cards" id="ai2-cards"></div>
+                        <div class="hand-value" id="ai2-hand"></div>
+                        <div class="chips-display">
+                            <div class="chip-icon">🪙</div>
+                            <span id="ai2-chips">1000</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Community Cards -->
+            <div class="community-section">
+                <div class="pot-display">
+                    <div class="pot-label">Pot</div>
+                    <div class="pot-amount" id="pot-amount">0</div>
+                </div>
+                <div class="community-cards" id="community-cards"></div>
+            </div>
+
+            <!-- Human Player Section -->
+            <div class="player-section">
+                <div class="player-info">
+                    <span class="player-label">You</span>
+                    <div class="player-cards" id="player-cards"></div>
+                    <div class="hand-value" id="player-hand"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <div class="bet-controls" id="bet-controls">
+                <button class="btn btn-secondary" id="fold-btn">Fold</button>
+                <button class="btn btn-secondary" id="check-btn">Check</button>
+                <button class="btn btn-primary" id="call-btn">Call <span id="call-amount">0</span></button>
+                <div class="raise-section">
+                    <input type="range" id="raise-slider" min="10" max="100" value="20" step="10">
+                    <button class="btn btn-primary" id="raise-btn">Raise <span id="raise-amount">20</span></button>
+                </div>
+            </div>
+            <button class="btn btn-primary btn-large" id="deal-btn">Deal Cards</button>
+        </div>
+
+        <!-- Message Display -->
+        <div class="message-overlay" id="message-overlay">
+            <div class="message-content">
+                <div class="message-icon" id="message-icon">🎉</div>
+                <h2 class="message-title" id="message-title">You Win!</h2>
+                <p class="message-text" id="message-text">Royal Flush!</p>
+                <button class="btn btn-primary" id="continue-btn">Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
