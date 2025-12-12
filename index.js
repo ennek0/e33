@@ -243,17 +243,87 @@ function setupEventListeners() {
         });
     });
 
-    // Menu Toggle: Show/hide sidebar
-    const menuToggles = document.querySelectorAll('.menu-button');
+    // Initialize sidebar elements
     const leftSidebar = document.querySelector('.sidebar');
-    menuToggles.forEach(menuToggle => {
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
+    const mainContent = document.querySelector('.main-content');
+    
+    console.log('Sidebar elements found:', {
+        leftSidebar: !!leftSidebar,
+        sidebarOverlay: !!sidebarOverlay,
+        mainContent: !!mainContent
+    });
+    
+    // Ensure sidebar starts closed
+    if (leftSidebar) {
+        console.log('Initial sidebar state:', leftSidebar.classList.contains('open'));
+        // Force remove open class and ensure proper initial state
+        leftSidebar.classList.remove('open');
+        if (sidebarOverlay) sidebarOverlay.classList.remove('active');
+        if (mainContent) mainContent.style.marginLeft = '0';
+        
+        // Double-check the sidebar is positioned correctly
+        const computedStyle = window.getComputedStyle(leftSidebar);
+        console.log('Sidebar left position:', computedStyle.left);
+    }
+
+    // Menu Toggle: Show/hide sidebar (header and course top bar)
+    const menuToggles = document.querySelectorAll('.menu-button');
+    console.log('Menu toggle buttons found:', menuToggles.length);
+    menuToggles.forEach((menuToggle, index) => {
+        console.log(`Menu button ${index}:`, menuToggle);
         if (menuToggle && leftSidebar) {
             menuToggle.addEventListener('click', () => {
                 console.log('Menu toggle clicked');
-                leftSidebar.classList.toggle('open');
+                toggleSidebar();
             });
         }
     });
+    
+    // Overlay click to close sidebar
+    if (sidebarOverlay) {
+        sidebarOverlay.addEventListener('click', () => {
+            toggleSidebar();
+        });
+    }
+
+    // Sidebar menu icon toggle
+    const sidebarMenuIcon = document.querySelector('.sidebar-menu-icon');
+    console.log('Sidebar menu icon found:', !!sidebarMenuIcon);
+    if (sidebarMenuIcon) {
+        sidebarMenuIcon.addEventListener('click', () => {
+            console.log('Sidebar menu icon clicked');
+            toggleSidebar();
+        });
+    } else {
+        console.error('Sidebar menu icon not found');
+    }
+
+    // Helper function to toggle sidebar
+    function toggleSidebar() {
+        console.log('toggleSidebar called');
+        if (!leftSidebar) {
+            console.error('Sidebar element not found');
+            return;
+        }
+        
+        const isOpen = leftSidebar.classList.contains('open');
+        console.log('Current sidebar state:', isOpen);
+        
+        if (isOpen) {
+            // Close sidebar
+            console.log('Closing sidebar');
+            leftSidebar.classList.remove('open');
+            if (sidebarOverlay) sidebarOverlay.classList.remove('active');
+            if (mainContent) mainContent.style.marginLeft = '0';
+        } else {
+            // Open sidebar
+            console.log('Opening sidebar');
+            leftSidebar.classList.add('open');
+            if (sidebarOverlay) sidebarOverlay.classList.add('active');
+            if (mainContent) mainContent.style.marginLeft = '280px';
+        }
+    }
 
     // Sidebar: Expand/Collapse Courses
     const coursesHeader = document.getElementById('courses-header');
@@ -270,13 +340,18 @@ function setupEventListeners() {
         }
 
         coursesHeader.addEventListener('click', () => {
-            coursesList.classList.toggle('expanded');
-            // Update the SVG icon rotation
-            if (coursesArrow) {
-                if (coursesList.classList.contains('expanded')) {
-                    coursesArrow.style.transform = 'rotate(180deg)';
-                } else {
-                    coursesArrow.style.transform = 'rotate(0deg)';
+            console.log('Courses header clicked');
+            if (coursesList) {
+                coursesList.classList.toggle('expanded');
+                // Update the SVG icon rotation
+                if (coursesArrow) {
+                    if (coursesList.classList.contains('expanded')) {
+                        coursesArrow.style.transform = 'rotate(180deg)';
+                        console.log('Courses expanded');
+                    } else {
+                        coursesArrow.style.transform = 'rotate(0deg)';
+                        console.log('Courses collapsed');
+                    }
                 }
             }
         });
@@ -285,7 +360,17 @@ function setupEventListeners() {
     // Sidebar: Home Navigation
     const navHome = document.getElementById('nav-home');
     if (navHome) {
-        navHome.addEventListener('click', showHomepage);
+        navHome.addEventListener('click', () => {
+            // Remove active from all nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            // Add active to home
+            navHome.classList.add('active');
+            showHomepage();
+            // Close sidebar after navigation
+            toggleSidebar();
+        });
     }
 
     // Sidebar: Course Items
@@ -294,7 +379,18 @@ function setupEventListeners() {
         item.addEventListener('click', () => {
             const courseId = item.getAttribute('data-course');
             if (courseId) {
+                // Remove active from all nav items
+                document.querySelectorAll('.nav-item').forEach(navItem => {
+                    navItem.classList.remove('active');
+                });
+                // Add active to calendar (since we're in a course section)
+                const navCalendar = document.getElementById('nav-calendar');
+                if (navCalendar) {
+                    navCalendar.classList.add('active');
+                }
                 showSection(courseId);
+                // Close sidebar after navigation
+                toggleSidebar();
             }
         });
     });
@@ -316,6 +412,82 @@ function setupEventListeners() {
         topicSelector.addEventListener('click', () => {
             // Could add dropdown functionality here
             console.log('Topic selector clicked');
+        });
+    }
+
+    // Contact Popup functionality
+    const contactButtonHeader = document.getElementById('contact-button-header');
+    const contactButtonCourse = document.getElementById('contact-button');
+    const contactPopup = document.getElementById('contact-popup');
+    const contactPopupClose = document.getElementById('contact-popup-close');
+
+    // Handle both contact buttons
+    [contactButtonHeader, contactButtonCourse].forEach(button => {
+        if (button && contactPopup) {
+            button.addEventListener('click', () => {
+                console.log('Contact button clicked');
+                contactPopup.classList.add('active');
+            });
+        }
+    });
+
+    if (contactPopupClose && contactPopup) {
+        contactPopupClose.addEventListener('click', () => {
+            console.log('Contact popup close clicked');
+            contactPopup.classList.remove('active');
+        });
+    }
+
+    // Close popup when clicking outside
+    if (contactPopup) {
+        contactPopup.addEventListener('click', (e) => {
+            if (e.target === contactPopup) {
+                contactPopup.classList.remove('active');
+            }
+        });
+    }
+
+    // Copy email to clipboard functionality
+    const emailLink = document.querySelector('.email-link');
+    if (emailLink) {
+        emailLink.addEventListener('click', (e) => {
+            e.preventDefault(); // Prevent default mailto behavior
+            const email = 'e33.classroom@gmail.com';
+            
+            // Copy to clipboard
+            navigator.clipboard.writeText(email).then(() => {
+                // Show temporary feedback
+                const originalText = emailLink.textContent;
+                emailLink.textContent = '¡Copiado!';
+                emailLink.style.color = 'var(--google-green)';
+                
+                // Revert after 2 seconds
+                setTimeout(() => {
+                    emailLink.textContent = originalText;
+                    emailLink.style.color = 'var(--google-blue)';
+                }, 2000);
+                
+                console.log('Email copied to clipboard:', email);
+            }).catch(err => {
+                console.error('Failed to copy email:', err);
+                // Fallback: select text for manual copy
+                const textArea = document.createElement('textarea');
+                textArea.value = email;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                // Show feedback
+                const originalText = emailLink.textContent;
+                emailLink.textContent = '¡Copiado!';
+                emailLink.style.color = 'var(--google-green)';
+                
+                setTimeout(() => {
+                    emailLink.textContent = originalText;
+                    emailLink.style.color = 'var(--google-blue)';
+                }, 2000);
+            });
         });
     }
 }
