@@ -66,6 +66,14 @@ const categories = {
         backgroundImage: 'fondos/clase4.jpg',
         assignments: [
             {
+                id: 'reta',
+                title: 'Retabet - Sports Betting',
+                type: 'Football Betting Platform',
+                dueDate: 'No due date',
+                icon: 'sports_soccer',
+                path: './reta/betting.html'
+            },
+            {
                 id: 'poker',
                 title: 'Classroom Poker',
                 type: 'Texas Hold\'em',
