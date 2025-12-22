@@ -25,10 +25,17 @@ class BettingGame {
             { name: 'Real Madrid CF', rating: 95 },
             { name: 'FC Barcelona', rating: 93 },
             { name: 'Atlético de Madrid', rating: 90 },
+<<<<<<< HEAD
             { name: 'Sevilla FC', rating: 83 },
             { name: 'Real Betis', rating: 85 },
             { name: 'Real Sociedad', rating: 85 },
             { name: 'Villarreal CF', rating: 89 },
+=======
+            { name: 'Sevilla FC', rating: 86 },
+            { name: 'Real Betis', rating: 85 },
+            { name: 'Real Sociedad', rating: 85 },
+            { name: 'Villarreal CF', rating: 84 },
+>>>>>>> bb59ba713f22a9b55b53cbd8b1b6add54cacae2f
             { name: 'Athletic Club (Bilbao)', rating: 83 },
             { name: 'Valencia CF', rating: 82 },
             { name: 'CA Osasuna', rating: 80 },
@@ -607,6 +614,7 @@ class BettingGame {
             this.selections.splice(existingIndex, 1);
             btn.classList.remove('selected');
         } else {
+<<<<<<< HEAD
             // Check for conflicts with existing selections (only for multi-bets)
             if (this.selections.length > 0) {
                 const conflictSelection = this.selections.find(s => {
@@ -623,6 +631,22 @@ class BettingGame {
                     this.showNotification('You cannot combine 1X2 and Double Chance markets from the same match in a single bet!', 'error');
                     return;
                 }
+=======
+            // Check for conflicts with existing selections
+            const conflictSelection = this.selections.find(s => {
+                if (s.matchId === matchId) {
+                    // Check if trying to combine 1X2 and Double Chance from same match
+                    return (s.market === '1X2' && (market === 'DC')) ||
+                           (s.market === 'DC' && (market === '1X2'));
+                }
+                return false;
+            });
+
+            if (conflictSelection) {
+                // Use a more user-friendly notification instead of alert
+                this.showNotification('You cannot combine 1X2 and Double Chance markets from the same match in a single bet!', 'error');
+                return;
+>>>>>>> bb59ba713f22a9b55b53cbd8b1b6add54cacae2f
             }
 
             // Add selection
@@ -935,7 +959,10 @@ class BettingGame {
                         this.updateLiveSection(); // Update live section to remove finished match
                         this.updateFinishedMatches(); // Update finished matches section
                         this.updateMyBets(); // Update bet display to show claim button immediately
+<<<<<<< HEAD
                         this.updateAllBetClaimButtons(); // Ensure claim buttons are updated immediately
+=======
+>>>>>>> bb59ba713f22a9b55b53cbd8b1b6add54cacae2f
                         
                         // Check if all matches are finished - trigger weekly reset
                         this.checkWeeklyReset();
@@ -1570,8 +1597,16 @@ class BettingGame {
 
     cashOutBet(betId) {
         const bet = this.myBets.find(b => b.id === betId);
+<<<<<<< HEAD
         if (!bet) {
             this.showNotification('Bet not found!', 'error');
+=======
+        if (!bet) return;
+
+        const match = this.matches.find(m => m.id === bet.matchId);
+        if (!match || match.status !== 'finished') {
+            this.showNotification('You can only claim winnings after the match has ended!', 'error');
+>>>>>>> bb59ba713f22a9b55b53cbd8b1b6add54cacae2f
             return;
         }
 
@@ -1580,6 +1615,7 @@ class BettingGame {
             return;
         }
 
+<<<<<<< HEAD
         // Check if all matches in this bet are finished
         let allMatchesFinished = true;
         if (bet.selections && bet.selections.length > 0) {
@@ -1604,6 +1640,8 @@ class BettingGame {
             return;
         }
 
+=======
+>>>>>>> bb59ba713f22a9b55b53cbd8b1b6add54cacae2f
         // Calculate the actual result based on market type
         let actualResult;
         let won = false;
@@ -1637,11 +1675,15 @@ class BettingGame {
         this.updateMyBets();
         this.updateBudgetDisplay();
         this.renderMatches(); // Refresh matches to update button states
+<<<<<<< HEAD
         this.updateAllBetClaimButtons(); // Ensure all claim buttons are properly updated
+=======
+>>>>>>> bb59ba713f22a9b55b53cbd8b1b6add54cacae2f
         
         this.showNotification(won ? `Congratulations! You won €${bet.potentialReturn.toFixed(2)}!` : 'Sorry, your bet did not win.', won ? 'success' : 'error');
     }
 
+<<<<<<< HEAD
     updateAllBetClaimButtons() {
         // Force update of all bet displays to ensure claim buttons appear/disappear correctly
         this.myBets.forEach(bet => {
@@ -1673,6 +1715,8 @@ class BettingGame {
         }
     }
 
+=======
+>>>>>>> bb59ba713f22a9b55b53cbd8b1b6add54cacae2f
     exitPromotions() {
         // Hide promotions page and show sports section
         document.getElementById('promotionsPage').style.display = 'none';
