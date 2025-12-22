@@ -1,5 +1,92 @@
 
 
+// ===== SEARCH FUNCTIONALITY =====
+function initializeSearch() {
+    const sidebarSearch = document.getElementById('sidebar-search');
+    const courseSearch = document.getElementById('course-search');
+    const headerSearch = document.getElementById('header-search');
+    
+    if (sidebarSearch) {
+        sidebarSearch.addEventListener('input', (e) => {
+            performGlobalSearch(e.target.value);
+        });
+    }
+    
+    if (courseSearch) {
+        courseSearch.addEventListener('input', (e) => {
+            performGlobalSearch(e.target.value);
+        });
+    }
+    
+    if (headerSearch) {
+        headerSearch.addEventListener('input', (e) => {
+            performGlobalSearch(e.target.value);
+        });
+    }
+}
+
+function performSearch(query) {
+    // This function is now deprecated - use performGlobalSearch instead
+    performGlobalSearch(query);
+}
+
+function performGlobalSearch(query) {
+    const searchTerm = query.toLowerCase().trim();
+    
+    if (searchTerm === '') {
+        // Clear search - show all homepage cards and reset current view
+        if (categoriesView && categoriesView.style.display !== 'none') {
+            const homepageCards = document.querySelectorAll('.homepage-card');
+            homepageCards.forEach(card => {
+                card.style.display = 'flex';
+            });
+        } else if (courseView && courseView.style.display !== 'none') {
+            // Reset to show all assignments in current course
+            const currentCourseTitle = document.getElementById('course-title').textContent;
+            Object.keys(categories).forEach(categoryId => {
+                if (categories[categoryId].title === currentCourseTitle) {
+                    renderAssignments(categories[categoryId].assignments);
+                    return;
+                }
+            });
+        }
+        return;
+    }
+    
+    // Find all matching games across all categories
+    const allMatches = [];
+    Object.keys(categories).forEach(categoryId => {
+        const category = categories[categoryId];
+        category.assignments.forEach(assignment => {
+            if (assignment.title.toLowerCase().includes(searchTerm) ||
+                assignment.type.toLowerCase().includes(searchTerm)) {
+                allMatches.push({
+                    ...assignment,
+                    categoryName: category.title,
+                    categoryId: categoryId
+                });
+            }
+        });
+    });
+    
+    if (allMatches.length === 0) {
+        return; // No results
+    }
+    
+    // Always show the category with the first match (even for single results)
+    const firstMatch = allMatches[0];
+    showSection(firstMatch.categoryId);
+    
+    // Then filter the assignments in that category to show only matches
+    setTimeout(() => {
+        const filteredAssignments = categories[firstMatch.categoryId].assignments.filter(assignment => 
+            assignment.title.toLowerCase().includes(searchTerm) ||
+            assignment.type.toLowerCase().includes(searchTerm)
+        );
+        renderAssignments(filteredAssignments);
+    }, 100);
+}
+
 // ===== GOOGLE CLASSROOM INTERFACE =====
 // Complete JavaScript for section view with assignments
 
@@ -57,6 +144,14 @@ const categories = {
                 dueDate: 'No due date',
                 icon: 'sports_esports',
                 path: './slope-main/index.html'
+            },
+            {
+                id: 'temple-run-2',
+                title: 'Temple Run 2',
+                type: 'Endless Runner',
+                dueDate: 'No due date',
+                icon: 'sports_esports',
+                path: './temple-run-2-main/index.html'
             }
         ]
     },
@@ -65,6 +160,14 @@ const categories = {
         section: 'Casino & Card Games',
         backgroundImage: 'fondos/clase4.jpg',
         assignments: [
+            {
+                id: 'reta',
+                title: 'Retabet - Sports Betting',
+                type: 'Football Betting Platform',
+                dueDate: 'No due date',
+                icon: 'sports_soccer',
+                path: './reta/betting.html'
+            },
             {
                 id: 'poker',
                 title: 'Classroom Poker',
@@ -183,6 +286,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeElements();
     applyCardBackgrounds();
     setupEventListeners();
+    initializeSearch();
 });
 
 function applyCardBackgrounds() {
@@ -243,17 +347,87 @@ function setupEventListeners() {
         });
     });
 
-    // Menu Toggle: Show/hide sidebar
-    const menuToggles = document.querySelectorAll('.menu-button');
+    // Initialize sidebar elements
     const leftSidebar = document.querySelector('.sidebar');
-    menuToggles.forEach(menuToggle => {
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
+    const mainContent = document.querySelector('.main-content');
+    
+    console.log('Sidebar elements found:', {
+        leftSidebar: !!leftSidebar,
+        sidebarOverlay: !!sidebarOverlay,
+        mainContent: !!mainContent
+    });
+    
+    // Ensure sidebar starts closed
+    if (leftSidebar) {
+        console.log('Initial sidebar state:', leftSidebar.classList.contains('open'));
+        // Force remove open class and ensure proper initial state
+        leftSidebar.classList.remove('open');
+        if (sidebarOverlay) sidebarOverlay.classList.remove('active');
+        if (mainContent) mainContent.style.marginLeft = '0';
+        
+        // Double-check the sidebar is positioned correctly
+        const computedStyle = window.getComputedStyle(leftSidebar);
+        console.log('Sidebar left position:', computedStyle.left);
+    }
+
+    // Menu Toggle: Show/hide sidebar (header and course top bar)
+    const menuToggles = document.querySelectorAll('.menu-button');
+    console.log('Menu toggle buttons found:', menuToggles.length);
+    menuToggles.forEach((menuToggle, index) => {
+        console.log(`Menu button ${index}:`, menuToggle);
         if (menuToggle && leftSidebar) {
             menuToggle.addEventListener('click', () => {
                 console.log('Menu toggle clicked');
-                leftSidebar.classList.toggle('open');
+                toggleSidebar();
             });
         }
     });
+    
+    // Overlay click to close sidebar
+    if (sidebarOverlay) {
+        sidebarOverlay.addEventListener('click', () => {
+            toggleSidebar();
+        });
+    }
+
+    // Sidebar menu icon toggle
+    const sidebarMenuIcon = document.querySelector('.sidebar-menu-icon');
+    console.log('Sidebar menu icon found:', !!sidebarMenuIcon);
+    if (sidebarMenuIcon) {
+        sidebarMenuIcon.addEventListener('click', () => {
+            console.log('Sidebar menu icon clicked');
+            toggleSidebar();
+        });
+    } else {
+        console.error('Sidebar menu icon not found');
+    }
+
+    // Helper function to toggle sidebar
+    function toggleSidebar() {
+        console.log('toggleSidebar called');
+        if (!leftSidebar) {
+            console.error('Sidebar element not found');
+            return;
+        }
+        
+        const isOpen = leftSidebar.classList.contains('open');
+        console.log('Current sidebar state:', isOpen);
+        
+        if (isOpen) {
+            // Close sidebar
+            console.log('Closing sidebar');
+            leftSidebar.classList.remove('open');
+            if (sidebarOverlay) sidebarOverlay.classList.remove('active');
+            if (mainContent) mainContent.style.marginLeft = '0';
+        } else {
+            // Open sidebar
+            console.log('Opening sidebar');
+            leftSidebar.classList.add('open');
+            if (sidebarOverlay) sidebarOverlay.classList.add('active');
+            if (mainContent) mainContent.style.marginLeft = '280px';
+        }
+    }
 
     // Sidebar: Expand/Collapse Courses
     const coursesHeader = document.getElementById('courses-header');
@@ -270,13 +444,18 @@ function setupEventListeners() {
         }
 
         coursesHeader.addEventListener('click', () => {
-            coursesList.classList.toggle('expanded');
-            // Update the SVG icon rotation
-            if (coursesArrow) {
-                if (coursesList.classList.contains('expanded')) {
-                    coursesArrow.style.transform = 'rotate(180deg)';
-                } else {
-                    coursesArrow.style.transform = 'rotate(0deg)';
+            console.log('Courses header clicked');
+            if (coursesList) {
+                coursesList.classList.toggle('expanded');
+                // Update the SVG icon rotation
+                if (coursesArrow) {
+                    if (coursesList.classList.contains('expanded')) {
+                        coursesArrow.style.transform = 'rotate(180deg)';
+                        console.log('Courses expanded');
+                    } else {
+                        coursesArrow.style.transform = 'rotate(0deg)';
+                        console.log('Courses collapsed');
+                    }
                 }
             }
         });
@@ -285,7 +464,17 @@ function setupEventListeners() {
     // Sidebar: Home Navigation
     const navHome = document.getElementById('nav-home');
     if (navHome) {
-        navHome.addEventListener('click', showHomepage);
+        navHome.addEventListener('click', () => {
+            // Remove active from all nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            // Add active to home
+            navHome.classList.add('active');
+            showHomepage();
+            // Close sidebar after navigation
+            toggleSidebar();
+        });
     }
 
     // Sidebar: Course Items
@@ -294,7 +483,18 @@ function setupEventListeners() {
         item.addEventListener('click', () => {
             const courseId = item.getAttribute('data-course');
             if (courseId) {
+                // Remove active from all nav items
+                document.querySelectorAll('.nav-item').forEach(navItem => {
+                    navItem.classList.remove('active');
+                });
+                // Add active to calendar (since we're in a course section)
+                const navCalendar = document.getElementById('nav-calendar');
+                if (navCalendar) {
+                    navCalendar.classList.add('active');
+                }
                 showSection(courseId);
+                // Close sidebar after navigation
+                toggleSidebar();
             }
         });
     });
@@ -316,6 +516,82 @@ function setupEventListeners() {
         topicSelector.addEventListener('click', () => {
             // Could add dropdown functionality here
             console.log('Topic selector clicked');
+        });
+    }
+
+    // Contact Popup functionality
+    const contactButtonHeader = document.getElementById('contact-button-header');
+    const contactButtonCourse = document.getElementById('contact-button');
+    const contactPopup = document.getElementById('contact-popup');
+    const contactPopupClose = document.getElementById('contact-popup-close');
+
+    // Handle both contact buttons
+    [contactButtonHeader, contactButtonCourse].forEach(button => {
+        if (button && contactPopup) {
+            button.addEventListener('click', () => {
+                console.log('Contact button clicked');
+                contactPopup.classList.add('active');
+            });
+        }
+    });
+
+    if (contactPopupClose && contactPopup) {
+        contactPopupClose.addEventListener('click', () => {
+            console.log('Contact popup close clicked');
+            contactPopup.classList.remove('active');
+        });
+    }
+
+    // Close popup when clicking outside
+    if (contactPopup) {
+        contactPopup.addEventListener('click', (e) => {
+            if (e.target === contactPopup) {
+                contactPopup.classList.remove('active');
+            }
+        });
+    }
+
+    // Copy email to clipboard functionality
+    const emailLink = document.querySelector('.email-link');
+    if (emailLink) {
+        emailLink.addEventListener('click', (e) => {
+            e.preventDefault(); // Prevent default mailto behavior
+            const email = 'e33.classroom@gmail.com';
+            
+            // Copy to clipboard
+            navigator.clipboard.writeText(email).then(() => {
+                // Show temporary feedback
+                const originalText = emailLink.textContent;
+                emailLink.textContent = '¡Copiado!';
+                emailLink.style.color = 'var(--google-green)';
+                
+                // Revert after 2 seconds
+                setTimeout(() => {
+                    emailLink.textContent = originalText;
+                    emailLink.style.color = 'var(--google-blue)';
+                }, 2000);
+                
+                console.log('Email copied to clipboard:', email);
+            }).catch(err => {
+                console.error('Failed to copy email:', err);
+                // Fallback: select text for manual copy
+                const textArea = document.createElement('textarea');
+                textArea.value = email;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                // Show feedback
+                const originalText = emailLink.textContent;
+                emailLink.textContent = '¡Copiado!';
+                emailLink.style.color = 'var(--google-green)';
+                
+                setTimeout(() => {
+                    emailLink.textContent = originalText;
+                    emailLink.style.color = 'var(--google-blue)';
+                }, 2000);
+            });
         });
     }
 }
@@ -442,3 +718,41 @@ document.addEventListener('keydown', (e) => {
         showHomepage();
     }
 });
+
+// ===== DARK MODE FUNCTIONALITY =====
+const darkModeToggle = document.getElementById('dark-mode-toggle');
+const sunIcon = document.querySelector('.sun-icon');
+const moonIcon = document.querySelector('.moon-icon');
+
+// Load dark mode preference from localStorage
+function loadDarkModePreference() {
+    const isDarkMode = localStorage.getItem('darkMode') === 'true';
+    if (isDarkMode) {
+        document.body.classList.add('dark-mode');
+        sunIcon.style.display = 'none';
+        moonIcon.style.display = 'block';
+    }
+}
+
+// Toggle dark mode
+function toggleDarkMode() {
+    const isDarkMode = document.body.classList.toggle('dark-mode');
+    
+    // Toggle icons
+    if (isDarkMode) {
+        sunIcon.style.display = 'none';
+        moonIcon.style.display = 'block';
+    } else {
+        sunIcon.style.display = 'block';
+        moonIcon.style.display = 'none';
+    }
+    
+    // Save preference to localStorage
+    localStorage.setItem('darkMode', isDarkMode);
+}
+
+// Initialize dark mode
+if (darkModeToggle) {
+    darkModeToggle.addEventListener('click', toggleDarkMode);
+    loadDarkModePreference();
+}

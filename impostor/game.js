@@ -5,6 +5,7 @@ const gameState = {
     impostorIndex: -1,
     impostorSynonym: '',
     gameMode: '', // 'with-hints' or 'without-hints'
+    selectedSection: '', // selected word section
     currentPlayerIndex: 0,
     cardRevealed: false,
     currentVoterIndex: 0,
@@ -18,81 +19,314 @@ const gameState = {
     isMobile: false
 };
 
-// ===== WORD BANK =====
-const wordBank = [
-    { word: 'Pizza', synonym: 'Comida Italiana' },
-    { word: 'Guitarra', synonym: 'Instrumento Musical' },
-    { word: 'Montaña', synonym: 'Altura' },
-    { word: 'Café', synonym: 'Postre' },
-    { word: 'Baloncesto', synonym: 'Deporte' },
-    { word: 'Avión', synonym: 'Volar' },
-    { word: 'Teléfono', synonym: 'Comunicacion' },
-    { word: 'Arcoíris', synonym: 'Color' },
-    { word: 'Mariposa', synonym: 'Insecto' },
-    { word: 'Chocolate', synonym: 'Dulce' },
-    { word: 'Fuegos Artificiales', synonym: 'Espectáculo' },
-    { word: 'Atardecer', synonym: 'Sol' },
-    { word: 'Cámara', synonym: 'Dispositivo Fotográfico' },
-    { word: 'Bicicleta', synonym: 'Deporte de dos ruedas' },
-    { word: 'Faro', synonym: 'Barcos' },
-    { word: 'Telescopio', synonym: 'Estrellas' },
-    { word: 'Volcán', synonym: 'Montaña' },
-    { word: 'Cascada', synonym: 'Rio' },
-    { word: 'Castillo', synonym: 'Medieval' },
-    { word: 'Helado', synonym: 'Postre' },
-    { word: 'Gato', synonym: 'Mascota' },
-    { word: 'Playa', synonym: 'Verano' },
-    { word: 'Libro', synonym: 'Paginas' },
-    { word: 'Reloj', synonym: 'Agujas' },
-    { word: 'Tren', synonym: 'Transporte' },
-    { word: 'Sombrero', synonym: 'Cabeza' },
-    { word: 'Estrella', synonym: 'Cielo' },
-    { word: 'Lago', synonym: 'Charco grande' },
-    { word: 'Pintura', synonym: 'Arte Visual' },
-    { word: 'Perro', synonym: 'Fiel' },
-    { word: 'Puente', synonym: 'Conexión/Estructura' },
-    { word: 'Avión de Papel', synonym: 'Manualidad' },
-    { word: 'Globos', synonym: 'Inflable' },
-    { word: 'Caracol', synonym: 'Casa en la espalda' },
-    { word: 'Maratón', synonym: 'Carrera' },
-    { word: 'Farol', synonym: 'Luz' },
-    { word: 'Piano', synonym: 'Teclas' },
-    { word: 'Barco', synonym: 'Mar' },
-    { word: 'Luna', synonym: 'Luz nocturna' },
-    { word: 'Jirafa', synonym: 'Animal Alto' },
-    { word: 'Helicóptero', synonym: 'Vuelo Vertical' },
-    { word: 'Nube', synonym: 'Gris' },
-    { word: 'Torre', synonym: 'Estructura Alta' },
-    { word: 'Carretera', synonym: 'Coches' },
-    { word: 'Camión', synonym: 'Transporte Pesado' },
-    { word: 'Parque', synonym: 'Niños/as' },
-    { word: 'Isla', synonym: 'Tierra Rodeada' },
-    { word: 'Sombrilla', synonym: 'Playa' },
-    { word: 'Cueva', synonym: 'Prehistoria' },
-    { word: 'Coche de Carreras', synonym: 'Deporte' },
-    { word: 'Trineo', synonym: 'Deslizamiento' },
-    { word: 'Castor', synonym: 'Dientes' },
-    { word: 'Puerta', synonym: 'Casa' },
-    { word: 'Ventana', synonym: 'Cristal' },
-    { word: 'Espada', synonym: 'Afilado' },
-    { word: 'Sombrero de Copa', synonym: 'Estilo Formal' },
-    { word: 'Molino', synonym: 'Viento' },
-    { word: 'Cinturón', synonym: 'Accesorio' },
-    { word: 'Pirámide', synonym: 'Egipto' },
-    { word: 'Balón', synonym: 'Deportes' },
-    { word: 'Gafas', synonym: 'Cristal' },
-    { word: 'Espejo', synonym: 'Reflejo' },
-    { word: 'Mapa', synonym: 'Mundo' },
-    { word: 'Linterna', synonym: 'Luz' },
-    { word: 'Fósil', synonym: 'Antiguos' },
-    { word: 'Paracaídas', synonym: 'Salto aereo' },
-    { word: 'Termómetro', synonym: 'Mide Temperatura' }
-    
-];
+// ===== THEMED WORD SECTIONS =====
+const wordSections = {
+    celebrities: [
+        { word: 'Eminem', synonym: 'Detroit' },
+        { word: 'Snoop Dogg', synonym: 'Ganja' },
+        { word: 'Dr. Dre', synonym: 'Productor' },
+        { word: 'Tupac Shakur', synonym: 'Leyenda' },
+        { word: '50 Cent', synonym: 'Survivor' },
+        { word: 'Lil Wayne', synonym: 'Tatuajes' },
+        { word: 'Kendrick Lamar', synonym: 'Premios' },
+        { word: 'Jay-Z', synonym: 'Empresario' },
+        { word: 'The Notorious B.I.G.', synonym: 'Brooklyn' },
+        { word: 'Nas', synonym: 'Nueva York' },
+        { word: 'Kanye West', synonym: 'Yé' },
+        { word: 'Big Daddy Kane', synonym: 'Leyenda' },
+        { word: 'Cardi B', synonym: 'Fuerte' },
+        { word: 'Lil Nas X', synonym: 'Old Town' },
+        { word: 'Megan Thee Stallion', synonym: 'Texas' },
+        { word: 'Travis Scott', synonym: 'Astroworld' },
+        { word: 'Post Malone', synonym: 'Tatuajes' },
+        { word: 'Doja Cat', synonym: 'Viral' },
+        { word: 'Logic', synonym: 'Paz' },
+        { word: 'Juice WRLD', synonym: 'Emoción' },
+        { word: 'Leonardo DiCaprio', synonym: 'Ecoactivista' },
+        { word: 'Brad Pitt', synonym: 'Carismático' },
+        { word: 'Angelina Jolie', synonym: 'Muchos hijos' },
+        { word: 'Tom Cruise', synonym: 'Cientología' },
+        { word: 'Julia Roberts', synonym: 'Pretty Woman' },
+        { word: 'Robert De Niro', synonym: 'Mafioso' },
+        { word: 'Al Pacino', synonym: 'El Padrino' },
+        { word: 'Meryl Streep', synonym: 'Versátil' },
+        { word: 'Dwayne Johnson', synonym: 'La Roca' },
+        { word: 'Scarlett Johansson', synonym: 'Viuda Negra' },
+        { word: 'Chris Hemsworth', synonym: 'Thor' },
+        { word: 'Jennifer Lawrence', synonym: 'Sincera' },
+        { word: 'Ryan Gosling', synonym: 'Romántico' },
+        { word: 'Emma Stone', synonym: 'Carismática' },
+        { word: 'Will Smith', synonym: 'Encantador' },
+        { word: 'Beyoncé', synonym: 'Reina' },
+        { word: 'Taylor Swift', synonym: 'Romántica' },
+        { word: 'Rihanna', synonym: 'Barbadiense' },
+        { word: 'Drake', synonym: 'Rapero' },
+        { word: 'Adele', synonym: 'Británica' },
+        { word: 'Ed Sheeran', synonym: 'Guitarra' },
+        { word: 'Lady Gaga', synonym: 'Extravagante' },
+        { word: 'Madonna', synonym: 'Ícono' },
+        { word: 'Michael Jackson', synonym: 'Rey del pop' },
+        { word: 'Elvis Presley', synonym: 'Rey del rock' },
+        { word: 'Marilyn Monroe', synonym: 'Icono de Hollywood' },
+        { word: 'Audrey Hepburn', synonym: 'Elegancia clásica' },
+        { word: 'James Dean', synonym: 'Rebelde sin causa' },
+        { word: 'Charlie Chaplin', synonym: 'Cómico legendario' }
+
+    ],
+    soccer: [
+        { word: 'Messi', synonym: 'Ganador de 7 Balones de Oro' },
+        { word: 'Cristiano Ronaldo', synonym: 'Ganador de 5 Balones de Oro' },
+        { word: 'Pelé', synonym: 'Rey del Fútbol' },
+        { word: 'Maradona', synonym: 'Mano de Dios' },
+        { word: 'Zidane', synonym: 'Gol de cabeza en final' },
+        { word: 'Ronaldinho', synonym: 'El Mago del Balón' },
+        { word: 'Ronaldo Nazario', synonym: 'El Fenómeno' },
+        { word: 'Xavi', synonym: 'Mediocampista Barcelona' },
+        { word: 'Iniesta', synonym: 'Gol en final del Mundial' },
+        { word: 'Casillas', synonym: 'Portero legendario' },
+        { word: 'Buffon', synonym: 'Portero Italiano' },
+        { word: 'Neuer', synonym: 'Portero Moderno' },
+        { word: 'Kahn', synonym: 'Titán Alemán' },
+        { word: 'Cantona', synonym: 'Rey de Manchester' },
+        { word: 'Henry', synonym: 'Goleador Arsenal' },
+        { word: 'Bergkamp', synonym: 'Holandés Fluido' },
+        { word: 'Van Persie', synonym: 'Gol de volea' },
+        { word: 'Robben', synonym: 'Velocista Holandés' },
+        { word: 'Sneijder', synonym: 'Mediocampista Creativo' },
+        { word: 'Van Dijk', synonym: 'Defensa Central' },
+        { word: 'De Bruyne', synonym: 'Mediocampista Bélgica' },
+        { word: 'Hazard', synonym: 'Extremo Bélgica' },
+        { word: 'Lukaku', synonym: 'Goleador Bélgica' },
+        { word: 'Salah', synonym: 'Faraón Egipcio' },
+        { word: 'Mané', synonym: 'Velocista Senegalés' },
+        { word: 'Firmino', synonym: 'Delantero Brasilero' },
+        { word: 'Alisson', synonym: 'Portero Brasilero' },
+        { word: 'Ederson', synonym: 'Portero Manchester City' },
+        { word: 'De Gea', synonym: 'Portero Español' },
+        { word: 'Ramos', synonym: 'Defensa Español' },
+        { word: 'Piqué', synonym: 'Defensa Barcelona' },
+        { word: 'Busquets', synonym: 'Mediocentro Barcelona' },
+        { word: 'Alba', synonym: 'Lateral Barcelona' },
+        { word: 'Jordi Alba', synonym: 'Lateral Español' },
+        { word: 'Thiago', synonym: 'Mediocampista Español' },
+        { word: 'Pedri', synonym: 'Joven promesa' },
+        { word: 'Gavi', synonym: 'Perla catalana' },
+        { word: 'Ansu Fati', synonym: 'Talento Lesionado' },
+        { word: 'Lewandowski', synonym: 'Goleador Polaco' },
+        { word: 'Müller', synonym: 'Alemán Clásico' },
+        { word: 'Goretzka', synonym: 'Mediocampista Alemán' },
+        { word: 'Kimmich', synonym: 'Versátil Alemán' },
+        { word: 'Haaland', synonym: 'Goleador Noruego' },
+        { word: 'Mbappé', synonym: 'Estrella Francesa' },
+        { word: 'Griezmann', synonym: 'Delantero Francés' },
+        { word: 'Pogba', synonym: 'Mediocampista Francés' },
+        { word: 'Kanté', synonym: 'Motor Francés' },
+        { word: 'Varane', synonym: 'Defensa Francés' },
+        { word: 'Lloris', synonym: 'Portero Francés' },
+        { word: 'Son Heung-min', synonym: 'Estrella Coreana' },
+        { word: 'Kane', synonym: 'Goleador Inglés' },
+        { word: 'Sterling', synonym: 'Extremo Inglés' },
+        { word: 'Foden', synonym: 'Talento Manchester' },
+        { word: 'Bellingham', synonym: 'Joven estrella' },
+        { word: 'Rice', synonym: 'Mediocampista Inglés' },
+        { word: 'Saka', synonym: 'Extremo Arsenal' },
+        { word: 'Odegaard', synonym: 'Capitán Arsenal' }
+    ],
+    technology: [
+        { word: 'iPhone', synonym: 'Teléfono Apple' },
+        { word: 'Android', synonym: 'Sistema Google' },
+        { word: 'Laptop', synonym: 'Computadora portátil' },
+        { word: 'Tablet', synonym: 'Dispositivo táctil' },
+        { word: 'Smartwatch', synonym: 'Reloj inteligente' },
+        { word: 'Headphones', synonym: 'Audífonos' },
+        { word: 'Speaker', synonym: 'Altavoz' },
+        { word: 'Router', synonym: 'Dispositivo WiFi' },
+        { word: 'Modem', synonym: 'Conexión internet' },
+        { word: 'Server', synonym: 'Computadora central' },
+        { word: 'Cloud', synonym: 'Almacenamiento online' },
+        { word: 'AI', synonym: 'Inteligencia Artificial' },
+        { word: 'Machine Learning', synonym: 'Aprendizaje automático' },
+        { word: 'Blockchain', synonym: 'Tecnología cadena' },
+        { word: 'Cryptocurrency', synonym: 'Moneda digital' },
+        { word: 'Bitcoin', synonym: 'Criptomoneda principal' },
+        { word: 'Ethereum', synonym: 'Plataforma smart contracts' },
+        { word: 'NFT', synonym: 'Token no fungible' },
+        { word: 'Metaverse', synonym: 'Mundo virtual' },
+        { word: 'VR', synonym: 'Realidad Virtual' },
+        { word: 'AR', synonym: 'Realidad Aumentada' },
+        { word: 'Drone', synonym: 'Vehículo aéreo' },
+        { word: 'Robot', synonym: 'Máquina autónoma' },
+        { word: 'IoT', synonym: 'Internet de las cosas' },
+        { word: '5G', synonym: 'Red móvil rápida' },
+        { word: 'WiFi', synonym: 'Red inalámbrica' },
+        { word: 'Bluetooth', synonym: 'Conexión cercana' },
+        { word: 'USB', synonym: 'Puerto universal' },
+        { word: 'HDMI', synonym: 'Conexión video' },
+        { word: 'Ethernet', synonym: 'Cable red' },
+        { word: 'Fiber Optic', synonym: 'Conexión rápida' },
+        { word: 'Satellite', synonym: 'Comunicación espacial' },
+        { word: 'GPS', synonym: 'Sistema posicionamiento' },
+        { word: 'App', synonym: 'Aplicación móvil' },
+        { word: 'Software', synonym: 'Programa computadora' },
+        { word: 'Hardware', synonym: 'Componentes físicos' },
+        { word: 'CPU', synonym: 'Procesador' },
+        { word: 'GPU', synonym: 'Tarjeta gráfica' },
+        { word: 'RAM', synonym: 'Memoria' },
+        { word: 'SSD', synonym: 'Almacenamiento rápido' },
+        { word: 'HDD', synonym: 'Disco duro' },
+        { word: 'Motherboard', synonym: 'Tarjeta principal' },
+        { word: 'Power Supply', synonym: 'Fuente energía' },
+        { word: 'Cooling System', synonym: 'Sistema refrigeración' },
+        { word: 'Case', synonym: 'Caja computadora' },
+        { word: 'Monitor', synonym: 'Pantalla' },
+        { word: 'Keyboard', synonym: 'Teclado' },
+        { word: 'Mouse', synonym: 'Ratón' },
+        { word: 'Webcam', synonym: 'Cámara web' },
+        { word: 'Microphone', synonym: 'Micrófono' },
+        { word: 'Printer', synonym: 'Impresora' },
+        { word: 'Scanner', synonym: 'Escáner' },
+        { word: 'Projector', synonym: 'Proyector' },
+        { word: 'Smart TV', synonym: 'Televisión inteligente' },
+        { word: 'Streaming', synonym: 'Transmisión online' },
+        { word: 'Netflix', synonym: 'Plataforma series' },
+        { word: 'YouTube', synonym: 'Plataforma videos' },
+        { word: 'Twitch', synonym: 'Plataforma gaming' },
+        { word: 'Discord', synonym: 'Comunicación gamers' },
+        { word: 'Zoom', synonym: 'Videoconferencias' },
+        { word: 'Slack', synonym: 'Comunicación equipo' }
+    ],
+    nature: [
+        { word: 'Montaña', synonym: 'Altura natural' },
+        { word: 'Río', synonym: 'Agua corriente' },
+        { word: 'Lago', synonym: 'Agua estancada' },
+        { word: 'Océano', synonym: 'Agua salada grande' },
+        { word: 'Playa', synonym: 'Costa arena' },
+        { word: 'Bosque', synonym: 'Árboles densos' },
+        { word: 'Selva', synonym: 'Vegetación tropical' },
+        { word: 'Desierto', synonym: 'Zona árida' },
+        { word: 'Cascada', synonym: 'Agua cayendo' },
+        { word: 'Volcán', synonym: 'Montaña eruptiva' },
+        { word: 'Glaciar', synonym: 'Hielo gigante' },
+        { word: 'Cueva', synonym: 'Formación rocosa' },
+        { word: 'Cañón', synonym: 'Valle profundo' },
+        { word: 'Valle', synonym: 'Tierra baja' },
+        { word: 'Colina', synonym: 'Montaña pequeña' },
+        { word: 'Mesa', synonym: 'Meseta plana' },
+        { word: 'Península', synonym: 'Tierra rodeada agua' },
+        { word: 'Isla', synonym: 'Tierra aislada' },
+        { word: 'Arrecife', synonym: 'Formación marina' },
+        { word: 'Atolón', synonym: 'Isla coral' },
+        { word: 'Delta', synonym: 'Desembocadura río' },
+        { word: 'Estuario', synonym: 'Mezcla agua salada' },
+        { word: 'Marisma', synonym: 'Tierra húmeda' },
+        { word: 'Pantano', synonym: 'Agua estancada vegetación' },
+        { word: 'Pradera', synonym: 'Hierba extensa' },
+        { word: 'Sabana', synonym: 'Pastizal africano' },
+        { word: 'Tundra', synonym: 'Vegetación ártica' },
+        { word: 'Taiga', synonym: 'Bosque coníferas' },
+        { word: 'Estepa', synonym: 'Llanura sin árboles' },
+        { word: 'Pampa', synonym: 'Llanura sudamericana' },
+        { word: 'Veld', synonym: 'Pradera sudafricana' },
+        { word: 'Outback', synonym: 'Desierto australiano' },
+        { word: 'Sahara', synonym: 'Desierto más grande' },
+        { word: 'Amazonas', synonym: 'Selva más grande' },
+        { word: 'Himalaya', synonym: 'Montañas más altas' },
+        { word: 'Alpes', synonym: 'Montañas europeas' },
+        { word: 'Rocosas', synonym: 'Montañas americanas' },
+        { word: 'Andes', synonym: 'Montañas sudamericanas' },
+        { word: 'Everest', synonym: 'Montaña más alta' },
+        { word: 'K2', synonym: 'Segunda montaña más alta' },
+        { word: 'Kilimanjaro', synonym: 'Montaña africana' },
+        { word: 'Mont Blanc', synonym: 'Montaña europea' },
+        { word: 'Denali', synonym: 'Montaña norteamericana' },
+        { word: 'Aconcagua', synonym: 'Montaña sudamericana' },
+        { word: 'Nilo', synonym: 'Río más largo' },
+        { word: 'Amazonas Río', synonym: 'Río más caudaloso' },
+        { word: 'Misisipi', synonym: 'Río americano' },
+        { word: 'Danubio', synonym: 'Río europeo' },
+        { word: 'Rin', synonym: 'Río Alemania' },
+        { word: 'Támesis', synonym: 'Río Londres' },
+        { word: 'Sena', synonym: 'Río París' },
+        { word: 'Tiber', synonym: 'Río Roma' },
+        { word: 'Ganges', synonym: 'Río sagrado' },
+        { word: 'Yangtsé', synonym: 'Río chino' },
+        { word: 'Mekong', synonym: 'Río asiático' },
+        { word: 'Colorado', synonym: 'Río cañón' },
+        { word: 'Yukon', synonym: 'Río ártico' },
+        { word: 'Mackenzie', synonym: 'Río canadiense' },
+        { word: 'Murray', synonym: 'Río australiano' }
+    ],
+    movies: [
+        { word: 'Titanic', synonym: 'Barco hundido' },
+        { word: 'Avatar', synonym: 'Mundo Pandora' },
+        { word: 'Star Wars', synonym: 'Galaxia lejana' },
+        { word: 'Harry Potter', synonym: 'Mago escuela' },
+        { word: 'Lord of the Rings', synonym: 'Anillo poder' },
+        { word: 'Marvel', synonym: 'Superhéroes' },
+        { word: 'DC', synonym: 'Superhéroes cómics' },
+        { word: 'Spider-Man', synonym: 'Hombre araña' },
+        { word: 'Batman', synonym: 'Caballero oscuro' },
+        { word: 'Superman', synonym: 'Hombre acero' },
+        { word: 'Iron Man', synonym: 'Hombre hierro' },
+        { word: 'Captain America', synonym: 'Soldado americano' },
+        { word: 'Thor', synonym: 'Dios trueno' },
+        { word: 'Hulk', synonym: 'Hombre verde' },
+        { word: 'Black Widow', synonym: 'Espía rusa' },
+        { word: 'Hawkeye', synonym: 'Arquero' },
+        { word: 'Black Panther', synonym: 'Rey Wakanda' },
+        { word: 'Doctor Strange', synonym: 'Mago tiempo' },
+        { word: 'Ant-Man', synonym: 'Hombre hormiga' },
+        { word: 'Guardians Galaxy', synonym: 'Equipo espacial' },
+        { word: 'Avengers', synonym: 'Equipo superhéroes' },
+        { word: 'Justice League', synonym: 'Equipo DC' },
+        { word: 'Wonder Woman', synonym: 'Princesa amazona' },
+        { word: 'Aquaman', synonym: 'Rey océano' },
+        { word: 'Flash', synonym: 'Velocista' },
+        { word: 'Cyborg', synonym: 'Hombre máquina' },
+        { word: 'Shazam', synonym: 'Niño superpoder' },
+        { word: 'Joker', synonym: 'Villano risa' },
+        { word: 'Lex Luthor', synonym: 'Villano inteligente' },
+        { word: 'Thanos', synonym: 'Titán loco' },
+        { word: 'Loki', synonym: 'Dios engaño' },
+        { word: 'Ultron', synonym: 'Robot maligno' },
+        { word: 'Voldemort', synonym: 'Señor oscuro' },
+        { word: 'Darth Vader', synonym: 'Padre Skywalker' },
+        { word: 'Emperor Palpatine', synonym: 'Emperador Sith' },
+        { word: 'Sauron', synonym: 'Señor anillo' },
+        { word: 'Gollum', synonym: 'Criatura anillo' },
+        { word: 'Gandalf', synonym: 'Mago gris' },
+        { word: 'Frodo', synonym: 'Portador anillo' },
+        { word: 'Aragorn', synonym: 'Rey Gondor' },
+        { word: 'Legolas', synonym: 'Elfo arquero' },
+        { word: 'Gimli', synonym: 'Enano hacha' },
+        { word: 'Hermione', synonym: 'Maga inteligente' },
+        { word: 'Ron', synonym: 'Amigo mago' },
+        { word: 'Dumbledore', synonym: 'Director Hogwarts' },
+        { word: 'Snape', synonym: 'Profesor poción' },
+        { word: 'McGonagall', synonym: 'Profesora transformación' },
+        { word: 'Hagrid', synonym: 'Gigante amable' },
+        { word: 'Dobby', synonym: 'Elfo libre' },
+        { word: 'Voldemort', synonym: 'Señor tenebroso' },
+        { word: 'Bellatrix', synonym: 'Mortífaga leal' },
+        { word: 'Lucius Malfoy', synonym: 'Padre Draco' },
+        { word: 'Draco Malfoy', synonym: 'Rival Harry' },
+        { word: 'Sirius Black', synonym: 'Padrino Harry' },
+        { word: 'Remus Lupin', synonym: 'Profesor licántropo' },
+        { word: 'James Bond', synonym: 'Agente 007' },
+        { word: 'Indiana Jones', synonym: 'Arqueólogo aventurero' },
+        { word: 'Jurassic Park', synonym: 'Parque dinosaurios' },
+        { word: 'Jaws', synonym: 'Tiburon terror' },
+        { word: 'ET', synonym: 'Extraterrestre amigo' },
+        { word: 'Back Future', synonym: 'Viaje tiempo' }
+    ]
+};
+
+// For backward compatibility, use celebrities section as default
+let wordBank = wordSections.celebrities;
 
 // ===== DOM ELEMENTS =====
-let setupScreen, modeSelectionScreen, cardRevealScreen, gameRoundScreen, votingScreen, resultScreen;
-let playerNameInput, addPlayerBtn, startGameBtn, playersListDiv, playerCountDiv, errorMessageDiv;
+let setupScreen, sectionSelectionScreen, modeSelectionScreen, cardRevealScreen, gameRoundScreen, votingScreen, resultScreen;
+let playerNameInput, addPlayerBtn, startGameBtn, clearPlayersBtn, playersListDiv, playerCountDiv, errorMessageDiv;
 let currentPlayerCard, currentPlayerInstruction, nextPlayerBtn, continueToRoundBtn;
 let currentPlayerNumberSpan, totalPlayersRevealSpan;
 let currentVoterInstruction, votersCountSpan, totalVotersSpan, nextVoterBtn, finishVotingBtn;
@@ -111,6 +345,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function initializeElements() {
     // Screens
     setupScreen = document.getElementById('setup-screen');
+    sectionSelectionScreen = document.getElementById('section-selection-screen');
     modeSelectionScreen = document.getElementById('mode-selection-screen');
     cardRevealScreen = document.getElementById('card-reveal-screen');
     gameRoundScreen = document.getElementById('game-round-screen');
@@ -121,6 +356,7 @@ function initializeElements() {
     playerNameInput = document.getElementById('player-name-input');
     addPlayerBtn = document.getElementById('add-player-btn');
     startGameBtn = document.getElementById('start-game-btn');
+    clearPlayersBtn = document.getElementById('clear-players-btn');
     playersListDiv = document.getElementById('players-list');
     playerCountDiv = document.getElementById('player-count');
     errorMessageDiv = document.getElementById('error-message');
@@ -171,6 +407,36 @@ function setupEventListeners() {
         e.preventDefault();
         showModeSelection();
     }, { passive: false });
+
+    // Clear Players Button
+    clearPlayersBtn.addEventListener('click', newGameWithNewPlayers);
+    clearPlayersBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        newGameWithNewPlayers();
+    }, { passive: false });
+
+    // Section Selection Screen
+    document.querySelectorAll('.section-card').forEach(card => {
+        card.addEventListener('click', () => {
+            const section = card.dataset.section;
+            if (section === 'random') {
+                selectRandomSection();
+            } else {
+                selectSection(section);
+            }
+        });
+        
+        // Add touch event for mobile compatibility
+        card.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            const section = card.dataset.section;
+            if (section === 'random') {
+                selectRandomSection();
+            } else {
+                selectSection(section);
+            }
+        }, { passive: false });
+    });
 
     // Mode Selection Screen
     document.querySelectorAll('.mode-card').forEach(card => {
@@ -366,8 +632,31 @@ function showError(message) {
     errorMessageDiv.textContent = message;
 }
 
+// ===== SECTION SELECTION =====
+function showSectionSelection() {
+    switchScreen(sectionSelectionScreen);
+}
+
+function selectSection(sectionKey) {
+    gameState.selectedSection = sectionKey;
+    wordBank = wordSections[sectionKey];
+    triggerHapticFeedback();
+    showModeSelectionAfterSection();
+}
+
+function selectRandomSection() {
+    const sections = Object.keys(wordSections);
+    const randomSection = sections[Math.floor(Math.random() * sections.length)];
+    selectSection(randomSection);
+}
+
 // ===== GAME MODE SELECTION =====
 function showModeSelection() {
+    // Show section selection first
+    showSectionSelection();
+}
+
+function showModeSelectionAfterSection() {
     switchScreen(modeSelectionScreen);
 }
 
@@ -448,13 +737,18 @@ function showCurrentPlayerCard() {
     card.addEventListener('click', flipCard);
     
     // Add touch events for mobile with proper handling
-    card.addEventListener('touchstart', (e) => {
+    card.addEventListener('touchend', (e) => {
         e.preventDefault();
         if (!card.classList.contains('flipped') && !gameState.cardRevealed) {
             card.classList.add('flipped');
             triggerHapticFeedback();
         }
     }, { passive: false });
+    
+    // Prevent long press context menu on mobile
+    card.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+    });
     
     // Add proper event listeners to the ready button
     const readyBtn = currentPlayerCard.querySelector('.card-ready-btn');
@@ -748,14 +1042,57 @@ function escapeHtml(text) {
 }
 
 function resetGame() {
-    gameState.players = [];
+    // Reset game state but preserve players
     gameState.gameMode = '';
+    gameState.selectedSection = '';
+    gameState.currentWord = '';
+    gameState.impostorIndex = -1;
+    gameState.impostorSynonym = '';
     gameState.currentPlayerIndex = 0;
     gameState.cardRevealed = false;
     gameState.currentVoterIndex = 0;
     gameState.votes = {};
     gameState.eliminatedPlayers = [];
     gameState.selectedVote = null;
+
+    // Clear timer if running
+    if (gameState.timerInterval) {
+        clearInterval(gameState.timerInterval);
+        gameState.timerInterval = null;
+    }
+    gameState.timeRemaining = 300;
+
+    // Update UI to show existing players
+    updatePlayersList();
+    updatePlayerCount();
+    checkStartButton();
+    playerNameInput.value = '';
+    errorMessageDiv.textContent = '';
+
+    switchScreen(setupScreen);
+}
+
+function newGameWithNewPlayers() {
+    // Complete reset including players
+    gameState.players = [];
+    gameState.gameMode = '';
+    gameState.selectedSection = '';
+    gameState.currentWord = '';
+    gameState.impostorIndex = -1;
+    gameState.impostorSynonym = '';
+    gameState.currentPlayerIndex = 0;
+    gameState.cardRevealed = false;
+    gameState.currentVoterIndex = 0;
+    gameState.votes = {};
+    gameState.eliminatedPlayers = [];
+    gameState.selectedVote = null;
+
+    // Clear timer if running
+    if (gameState.timerInterval) {
+        clearInterval(gameState.timerInterval);
+        gameState.timerInterval = null;
+    }
+    gameState.timeRemaining = 300;
 
     playersListDiv.innerHTML = '';
     updatePlayerCount();

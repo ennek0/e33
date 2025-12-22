@@ -193,6 +193,24 @@ body {
     margin-top: 24px;
 }
 
+/* Setup Buttons Layout */
+.setup-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.setup-buttons .btn-large {
+    margin-top: 0;
+    flex: 2;
+}
+
+.setup-buttons .btn-secondary {
+    flex: 1;
+    padding: 16px;
+    font-size: 14px;
+}
+
 /* Player Count */
 .player-count {
     text-align: center;
@@ -286,6 +304,16 @@ body {
     transform-style: preserve-3d;
     transition: transform 0.5s ease;
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.card:active {
+    transform: scale(0.98);
 }
 
 .card.flipped {
@@ -483,6 +511,62 @@ body {
     color: #666;
     margin-bottom: 32px;
     line-height: 1.6;
+}
+
+/* Section Selection */
+.section-selection-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.section-card {
+    background: white;
+    border-radius: 16px;
+    padding: 32px 24px;
+    text-align: center;
+    border: 2px solid #e5e5e5;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.section-card:hover {
+    transform: translateY(-4px);
+    border-color: #1a1a1a;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+.section-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #1a1a1a;
+    letter-spacing: -0.5px;
+}
+
+.section-description {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+    line-height: 1.4;
+    flex-grow: 1;
+}
+
+.section-btn {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 14px;
 }
 
 /* Mode Selection */
@@ -902,7 +986,7 @@ body {
     }
     
     /* Prevent text selection on mobile */
-    .card, .voting-card, .mode-card {
+    .card, .voting-card, .mode-card, .section-card {
         -webkit-user-select: none;
         -moz-user-select: none;
         -ms-user-select: none;
@@ -911,7 +995,7 @@ body {
     }
     
     /* Better card shadows for mobile */
-    .card, .voting-card, .mode-card {
+    .card, .voting-card, .mode-card, .section-card {
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
     
@@ -921,12 +1005,39 @@ body {
     }
     
     /* Enhanced touch feedback */
-    .card, .voting-card, .mode-card {
+    .card, .voting-card, .mode-card, .section-card {
         transition: transform 0.1s ease;
     }
     
-    .card:active, .voting-card:active, .mode-card:active {
+    .card:active, .voting-card:active, .mode-card:active, .section-card:active {
         transform: scale(0.96);
+    }
+    
+    /* Card flipping mobile optimizations */
+    .card {
+        -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none;
+        touch-action: manipulation;
+    }
+    
+    .card:active:not(.flipped) {
+        transform: scale(0.95);
+    }
+    
+    .card.flipped:active {
+        transform: rotateY(180deg) scale(0.98);
+    }
+    
+    /* Setup buttons mobile layout */
+    .setup-buttons {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .setup-buttons .btn-large,
+    .setup-buttons .btn-secondary {
+        flex: 1;
+        width: 100%;
     }
 }
 
@@ -936,6 +1047,95 @@ body {
     .btn {
         min-height: 52px;
         padding: 18px 24px;
+    }
+    
+    /* Setup buttons for small mobile */
+    .setup-buttons {
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 20px;
+    }
+    
+    .setup-buttons .btn-secondary {
+        padding: 14px 20px;
+        font-size: 13px;
+        min-height: 48px;
+    }
+    
+    .setup-buttons .btn-large {
+        padding: 18px 24px;
+        font-size: 16px;
+        min-height: 56px;
+    }
+    
+    /* Setup card padding optimization */
+    .setup-card {
+        padding: 24px 20px;
+    }
+    
+    /* Input group mobile optimization */
+    .input-group {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .input-group input {
+        width: 100%;
+        margin-bottom: 0;
+    }
+    
+    .input-group button {
+        width: 100%;
+        margin-top: 8px;
+    }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+    /* Larger touch targets for small screens */
+    .btn {
+        min-height: 52px;
+        padding: 18px 24px;
+    }
+    
+    /* Setup buttons for small mobile */
+    .setup-buttons {
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 20px;
+    }
+    
+    .setup-buttons .btn-secondary {
+        padding: 14px 20px;
+        font-size: 13px;
+        min-height: 48px;
+    }
+    
+    .setup-buttons .btn-large {
+        padding: 18px 24px;
+        font-size: 16px;
+        min-height: 56px;
+    }
+    
+    /* Setup card padding optimization */
+    .setup-card {
+        padding: 24px 20px;
+    }
+    
+    /* Input group mobile optimization */
+    .input-group {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .input-group input {
+        width: 100%;
+        margin-bottom: 0;
+    }
+    
+    .input-group button {
+        width: 100%;
+        margin-top: 8px;
     }
     
     .player-tag .remove-btn {
@@ -951,9 +1151,35 @@ body {
     }
     
     /* Single column layout for better mobile experience */
-    .mode-selection-container {
+    .mode-selection-container, .section-selection-container {
         grid-template-columns: 1fr;
         gap: 16px;
+    }
+    
+    /* Optimize section cards for mobile */
+    .section-card {
+        padding: 24px 20px;
+        min-height: 160px;
+    }
+    
+    .section-icon {
+        font-size: 40px;
+        margin-bottom: 12px;
+    }
+    
+    .section-title {
+        font-size: 18px;
+        margin-bottom: 6px;
+    }
+    
+    .section-description {
+        font-size: 13px;
+        margin-bottom: 16px;
+    }
+    
+    .section-btn {
+        padding: 10px 14px;
+        font-size: 13px;
     }
 }
 
@@ -976,17 +1202,95 @@ body {
         padding: 20px;
     }
     
+    /* Setup buttons landscape optimization */
+    .setup-buttons {
+        flex-direction: row;
+        gap: 10px;
+        margin-top: 16px;
+    }
+    
+    .setup-buttons .btn-secondary {
+        padding: 10px 16px;
+        font-size: 12px;
+        min-height: 44px;
+    }
+    
+    .setup-buttons .btn-large {
+        padding: 12px 20px;
+        font-size: 14px;
+        min-height: 44px;
+    }
+    
+    /* Input group landscape */
+    .input-group {
+        flex-direction: row;
+        gap: 8px;
+    }
+    
+    .input-group input {
+        flex: 1;
+        margin-bottom: 0;
+    }
+    
+    .input-group button {
+        margin-top: 0;
+        min-height: 44px;
+        padding: 10px 16px;
+    }
+    
     .card-wrapper {
         height: 200px;
     }
     
-    .timer-circle {
-        width: 140px;
-        height: 140px;
+    /* Compact section cards for landscape */
+    .section-card {
+        padding: 20px 16px;
+        min-height: 140px;
     }
     
-    .timer-text {
-        font-size: 28px;
+    .section-icon {
+        font-size: 36px;
+        margin-bottom: 8px;
+    }
+    
+    .section-title {
+        font-size: 16px;
+        margin-bottom: 4px;
+    }
+    
+    .section-description {
+        font-size: 12px;
+        margin-bottom: 12px;
+    }
+    
+    .section-btn {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+}
+
+/* Tablet optimizations */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .section-selection-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    
+    .section-card {
+        padding: 28px 20px;
+        min-height: 180px;
+    }
+    
+    .section-icon {
+        font-size: 44px;
+    }
+    
+    .section-title {
+        font-size: 19px;
+    }
+    
+    .section-description {
+        font-size: 13px;
     }
 }
 

@@ -17,13 +17,21 @@
     --google-purple: #9334e6;
     --google-teal: #00897b;
 
-    /* Neutral Colors */
+    /* Light Mode Colors */
     --bg-light: #f1f3f4;
     --card-bg: #ffffff;
     --text-primary: #3c4043;
     --text-secondary: #5f6368;
     --border-color: #dadce0;
     --hover-bg: #f1f3f4;
+
+    /* Dark Mode Colors */
+    --dark-bg: #202124;
+    --dark-card-bg: #292a2d;
+    --dark-text-primary: #e8eaed;
+    --dark-text-secondary: #9aa0a6;
+    --dark-border-color: #3c4043;
+    --dark-hover-bg: #3c4043;
 
     /* Shadows - exact from Google Classroom */
     --shadow-card: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
@@ -38,6 +46,221 @@ body {
     display: flex;
     flex-direction: column;
     -webkit-font-smoothing: antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ===== DARK MODE STYLES ===== */
+body.dark-mode {
+    background-color: var(--dark-bg) !important;
+    color: var(--dark-text-primary) !important;
+}
+
+body.dark-mode .classroom-container {
+    background-color: var(--dark-bg) !important;
+}
+
+body.dark-mode .classroom-header {
+    background-color: var(--dark-card-bg);
+    border-bottom-color: var(--dark-border-color);
+}
+
+body.dark-mode .header-google,
+body.dark-mode .header-classroom {
+    color: var(--dark-text-secondary);
+}
+
+body.dark-mode .icon-button {
+    color: var(--dark-text-secondary);
+}
+
+body.dark-mode .icon-button:hover {
+    background-color: var(--dark-hover-bg);
+}
+
+body.dark-mode .homepage-card {
+    background: var(--dark-card-bg);
+    border-color: var(--dark-border-color);
+}
+
+body.dark-mode .card-body-home {
+    background: #2d2e30;
+}
+
+body.dark-mode .card-footer-home {
+    background: var(--dark-card-bg);
+    border-top-color: var(--dark-border-color);
+}
+
+body.dark-mode .footer-icon-btn {
+    color: var(--dark-text-secondary);
+}
+
+body.dark-mode .footer-icon-btn:hover {
+    background-color: var(--dark-hover-bg);
+}
+
+body.dark-mode .sidebar {
+    background-color: var(--dark-card-bg);
+    border-right-color: var(--dark-border-color);
+}
+
+body.dark-mode .sidebar-brand {
+    color: var(--dark-text-primary);
+}
+
+body.dark-mode .nav-text {
+    color: var(--dark-text-primary);
+}
+
+body.dark-mode .courses-title {
+    color: var(--dark-text-primary);
+}
+
+body.dark-mode .course-name {
+    color: var(--dark-text-primary);
+}
+
+body.dark-mode .course-top-bar {
+    background-color: var(--dark-card-bg);
+    border-bottom-color: var(--dark-border-color);
+}
+
+body.dark-mode .course-title {
+    color: var(--dark-text-primary);
+}
+
+body.dark-mode .course-description {
+    color: var(--dark-text-secondary);
+}
+
+body.dark-mode .tab-nav-button {
+    color: var(--dark-text-secondary);
+    background-color: var(--dark-card-bg);
+}
+
+body.dark-mode .tab-nav-button.active {
+    color: var(--dark-text-primary);
+}
+
+body.dark-mode .tab-navigation {
+    background-color: var(--dark-card-bg);
+    border-bottom-color: var(--dark-border-color);
+}
+
+body.dark-mode .topic-selector {
+    color: var(--dark-text-secondary);
+    background-color: var(--dark-card-bg);
+    border-color: var(--dark-border-color);
+}
+
+body.dark-mode .assignment-item {
+    background-color: var(--dark-card-bg);
+    border-color: var(--dark-border-color);
+}
+
+body.dark-mode .assignment-title {
+    color: var(--dark-text-primary);
+}
+
+body.dark-mode .assignment-subtitle {
+    color: var(--dark-text-secondary);
+}
+
+body.dark-mode .assignment-due {
+    color: var(--dark-text-secondary);
+}
+
+body.dark-mode .assignment-meta {
+    color: var(--dark-text-secondary);
+}
+
+body.dark-mode .contact-popup {
+    background-color: var(--dark-card-bg);
+}
+
+body.dark-mode .contact-title {
+    color: var(--dark-text-primary);
+}
+
+body.dark-mode .contact-text {
+    color: var(--dark-text-secondary);
+}
+
+body.dark-mode .email-label {
+    color: var(--dark-text-secondary);
+}
+
+body.dark-mode .email-link {
+    color: var(--google-blue);
+}
+
+body.dark-mode .course-view {
+    background: var(--dark-bg);
+}
+
+/* ===== SEARCH BAR ===== */
+.search-container {
+    display: flex;
+    align-items: center;
+    background: var(--bg-light);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin: 8px 0;
+    transition: border-color 0.2s, background-color 0.2s;
+}
+
+.search-container:focus-within {
+    border-color: var(--google-blue);
+}
+
+.search-icon {
+    color: var(--text-secondary);
+    margin-right: 8px;
+    font-size: 20px;
+}
+
+.search-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 14px;
+    color: var(--text-primary);
+    padding: 0;
+}
+
+.search-input::placeholder {
+    color: var(--text-secondary);
+}
+
+.course-search {
+    max-width: 300px;
+    margin: 0;
+}
+
+.header-search {
+    max-width: 250px;
+    margin-right: 12px;
+}
+
+/* Dark mode for search bars */
+body.dark-mode .search-container {
+    background: var(--dark-card-bg);
+    border-color: var(--dark-border-color);
+}
+
+body.dark-mode .search-icon {
+    color: var(--dark-text-secondary);
+}
+
+body.dark-mode .search-input {
+    color: var(--dark-text-primary);
+}
+
+body.dark-mode .search-input::placeholder {
+    color: var(--dark-text-secondary);
 }
 
 /* ===== HEADER - EXACT MATCH ===== */
@@ -253,6 +476,113 @@ body {
     transition: margin-left 0.3s ease;
 }
 
+/* ===== CONTACT POPUP ===== */
+.contact-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.contact-popup.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.contact-popup-content {
+    background: var(--bg-light);
+    border-radius: 8px;
+    box-shadow: var(--shadow-card-hover);
+    max-width: 400px;
+    width: 90%;
+    overflow: hidden;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+    position: relative;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.contact-popup.active .contact-popup-content {
+    transform: scale(1);
+}
+
+.contact-popup-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text-secondary);
+    transition: background-color 0.15s;
+}
+
+.contact-popup-close:hover {
+    background-color: var(--hover-bg);
+}
+
+.contact-title {
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+}
+
+.contact-info-icon {
+    color: var(--google-blue);
+    margin-bottom: 16px;
+}
+
+.contact-text {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    color: var(--text-primary);
+    line-height: 1.5;
+}
+
+.contact-email {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.email-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.email-link {
+    font-size: 14px;
+    color: var(--google-blue);
+    text-decoration: none;
+    transition: text-decoration 0.2s;
+}
+
+.email-link:hover {
+    text-decoration: underline;
+}
+
 /* ===== SIDEBAR ===== */
 .sidebar {
     width: 280px;
@@ -278,7 +608,10 @@ body {
 /* Overlay for sidebar */
 .sidebar-overlay {
     position: fixed;
-    inset: 0;
+    top: 0;
+    left: 280px;
+    right: 0;
+    bottom: 0;
     background: rgba(0, 0, 0, 0.4);
     z-index: 1000;
     opacity: 0;
@@ -288,17 +621,7 @@ body {
 
 .sidebar-overlay.active {
     opacity: 1;
-    pointer-events: all;
-}
-
-.sidebar-overlay.active::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 280px;
-    right: 0;
-    bottom: 0;
-    pointer-events: all;
+    pointer-events: auto;
 }
 
 .sidebar-top {
@@ -467,6 +790,8 @@ body {
     display: flex;
     flex-direction: column;
     overflow-y: auto;
+    transition: margin-left 0.3s ease;
+    margin-left: 0;
 }
 
 .course-top-bar {
@@ -929,12 +1254,25 @@ body {
     }
 }
 
-/* ===== SIDEBAR RESPONSIVE ===== */
-@media (max-width: 768px) {
-    /* Mobile-specific styles can go here if needed */
-}
+    .contact-email {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
 
-/* ===== UTILITIES ===== */
-.hidden {
-    display: none !important;
-}
+    .email-label {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--text-secondary);
+    }
+
+    .email-link {
+        font-size: 14px;
+        color: var(--google-blue);
+        text-decoration: none;
+        transition: text-decoration 0.2s;
+    }
+
+    .email-link:hover {
+        text-decoration: underline;
+    }
