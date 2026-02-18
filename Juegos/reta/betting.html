@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema: UD06: Haririk gabeko komunikazio eta protokoloak | Moodle</title>
+    <link rel="icon" type="image/png" href="../../imagenes/modle icono pr.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link rel="stylesheet" href="betting.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="betting-header">
+        <div class="header-left">
+            <img src="logo reta.jpg" alt="Retabet" class="site-logo">
+            <nav class="main-menu">
+                <a href="#" class="menu-item active" data-page="sports">Sports</a>
+                <a href="#" class="menu-item" data-page="live">Live</a>
+                <a href="#" class="menu-item" data-page="promotions">Promotions</a>
+            </nav>
+        </div>
+        <div class="header-right">
+            <button class="register-btn">Register</button>
+            <select class="lang-selector">
+                <option>EN</option>
+                <option>ES</option>
+            </select>
+            <button class="icon-btn search-btn">
+                <span class="material-icons-outlined">search</span>
+            </button>
+            <div class="user-info">
+                <div class="budget-display">
+                    <span class="budget-label">Budget:</span>
+                    <span class="budget-amount" id="userBudget">€50.00</span>
+                </div>
+                <span class="username">Guest User</span>
+                <div class="user-avatar">G</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sports Menu -->
+    <div class="sports-menu">
+        <button class="sport-btn active" data-sport="laliga">
+            <span class="material-icons-outlined">sports_soccer</span>
+            LaLiga
+        </button>
+        <button class="sport-btn" data-sport="hypermotion">
+            <span class="material-icons-outlined">sports_soccer</span>
+            LaLiga Hypermotion
+        </button>
+        <button class="sport-btn" data-sport="all">
+            <span class="material-icons-outlined">sports_soccer</span>
+            All
+        </button>
+        <button class="sport-btn" data-sport="results">
+            <span class="material-icons-outlined">fact_check</span>
+            Matchday Results
+        </button>
+    </div>
+
+    <!-- Main Content -->
+    <main class="betting-main">
+        <!-- Game Time Display -->
+        <div class="game-time-display">
+            <div class="time-label">Current Time</div>
+            <div class="time-value" id="currentTime">14:30</div>
+            <div class="date-value" id="currentDate">12/15/2025</div>
+            
+            <!-- Time Control Buttons -->
+            <div class="time-controls">
+                <div class="time-control-group">
+                    <label>Day:</label>
+                    <button class="time-btn" onclick="game.advanceTime('day', 1)">+1 Day</button>
+                </div>
+                <div class="time-control-group">
+                    <label>Hour:</label>
+                    <button class="time-btn" onclick="game.advanceTime('hour', 1)">+1 Hour</button>
+                    <button class="time-btn" onclick="game.advanceTime('hour', -1)">-1 Hour</button>
+                </div>
+                <div class="time-control-group">
+                    <label>Minute:</label>
+                    <button class="time-btn" onclick="game.advanceTime('minute', 15)">+15 Min</button>
+                    <button class="time-btn" onclick="game.advanceTime('minute', -15)">-15 Min</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Live Section (shown when Live is selected) -->
+        <section class="live-section" id="liveSection" style="display: none;">
+            <div class="live-header">
+                <div class="live-header-content">
+                    <span class="live-label">LIVE</span>
+                    <span class="live-time" id="liveTime">20:00</span>
+                    <span class="live-date" id="liveDate">12/15/2025</span>
+                </div>
+            </div>
+            <div class="live-matches-container">
+                <div class="live-match-detail">
+                    <div class="match-header">
+                        <span class="competition">LaLiga</span>
+                        <span class="live-badge">LIVE</span>
+                    </div>
+                    <div class="teams">
+                        <div class="team">
+                            <span class="team-name">Real Madrid</span>
+                            <div class="goal-scorers">
+                                <div class="goal">Benzema 23', 45'</div>
+                            </div>
+                        </div>
+                        <div class="score">
+                            <span class="current-score">2-1</span>
+                            <span class="minute">65'</span>
+                        </div>
+                        <div class="team">
+                            <span class="team-name">Barcelona</span>
+                            <div class="goal-scorers">
+                                <div class="goal">Lewandowski 38'</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="match-events">
+                        <div class="event">65' Yellow Card - Casemiro (Real Madrid)</div>
+                        <div class="event">58' Substitution - Barcelona: Pedri ON, Gündoğan OFF</div>
+                        <div class="event">45' Goal! Benzema scores for Real Madrid</div>
+                        <div class="event">38' Goal! Lewandowski scores for Barcelona</div>
+                        <div class="event">23' Goal! Benzema scores for Real Madrid</div>
+                    </div>
+                    <div class="main-market">
+                        <button class="odd-btn" data-match="1" data-market="1X2" data-option="1" data-odds="2.10">
+                            <span class="option">1</span>
+                            <span class="odds">2.10</span>
+                        </button>
+                        <button class="odd-btn" data-match="1" data-market="1X2" data-option="X" data-odds="3.40">
+                            <span class="option">X</span>
+                            <span class="odds">3.40</span>
+                        </button>
+                        <button class="odd-btn" data-match="1" data-market="1X2" data-option="2" data-odds="3.20">
+                            <span class="option">2</span>
+                            <span class="odds">3.20</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="live-match-detail">
+                    <div class="match-header">
+                        <span class="competition">Premier League</span>
+                        <span class="live-badge">LIVE</span>
+                    </div>
+                    <div class="teams">
+                        <div class="team">
+                            <span class="team-name">Manchester City</span>
+                            <div class="goal-scorers">
+                                <div class="goal">Haaland 15'</div>
+                            </div>
+                        </div>
+                        <div class="score">
+                            <span class="current-score">1-1</span>
+                            <span class="minute">42'</span>
+                        </div>
+                        <div class="team">
+                            <span class="team-name">Liverpool</span>
+                            <div class="goal-scorers">
+                                <div class="goal">Salah 28'</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="match-events">
+                        <div class="event">42' Yellow Card - Foden (Manchester City)</div>
+                        <div class="event">35' Corner - Liverpool</div>
+                        <div class="event">28' Goal! Salah scores for Liverpool</div>
+                        <div class="event">15' Goal! Haaland scores for Manchester City</div>
+                    </div>
+                    <div class="main-market">
+                        <button class="odd-btn" data-match="2" data-market="1X2" data-option="1" data-odds="1.85">
+                            <span class="option">1</span>
+                            <span class="odds">1.85</span>
+                        </button>
+                        <button class="odd-btn" data-match="2" data-market="1X2" data-option="X" data-odds="3.60">
+                            <span class="option">X</span>
+                            <span class="odds">3.60</span>
+                        </button>
+                        <button class="odd-btn" data-match="2" data-market="1X2" data-option="2" data-odds="4.20">
+                            <span class="option">2</span>
+                            <span class="odds">4.20</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Match Carousel (shown when Sports is selected) -->
+        <section class="featured-carousel" id="sportsSection">
+            <h2>Featured Matches</h2>
+            <div class="carousel-container">
+                <div class="featured-match">
+                    <div class="match-header">
+                        <span class="competition">LaLiga</span>
+                        <span class="live-badge">LIVE</span>
+                    </div>
+                    <div class="match-datetime">
+                        <span class="match-date">12/15/2025</span>
+                        <span class="match-time">21:00</span>
+                    </div>
+                    <div class="teams">
+                        <div class="team">
+                            <span class="team-name">Real Madrid</span>
+                        </div>
+                        <div class="score">
+                            <span class="current-score">2-1</span>
+                            <span class="minute">65'</span>
+                        </div>
+                        <div class="team">
+                            <span class="team-name">Barcelona</span>
+                        </div>
+                    </div>
+                    <div class="main-market">
+                        <button class="odd-btn" data-match="1" data-market="1X2" data-option="1" data-odds="2.10">
+                            <span class="option">1</span>
+                            <span class="odds">2.10</span>
+                        </button>
+                        <button class="odd-btn" data-match="1" data-market="1X2" data-option="X" data-odds="3.40">
+                            <span class="option">X</span>
+                            <span class="odds">3.40</span>
+                        </button>
+                        <button class="odd-btn" data-match="1" data-market="1X2" data-option="2" data-odds="3.20">
+                            <span class="option">2</span>
+                            <span class="odds">3.20</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="featured-match">
+                    <div class="match-header">
+                        <span class="competition">Premier League</span>
+                        <span class="live-badge">LIVE</span>
+                    </div>
+                    <div class="match-datetime">
+                        <span class="match-date">12/15/2025</span>
+                        <span class="match-time">20:00</span>
+                    </div>
+                    <div class="teams">
+                        <div class="team">
+                            <span class="team-name">Manchester City</span>
+                        </div>
+                        <div class="score">
+                            <span class="current-score">1-1</span>
+                            <span class="minute">42'</span>
+                        </div>
+                        <div class="team">
+                            <span class="team-name">Liverpool</span>
+                        </div>
+                    </div>
+                    <div class="main-market">
+                        <button class="odd-btn" data-match="2" data-market="1X2" data-option="1" data-odds="1.85">
+                            <span class="option">1</span>
+                            <span class="odds">1.85</span>
+                        </button>
+                        <button class="odd-btn" data-match="2" data-market="1X2" data-option="X" data-odds="3.60">
+                            <span class="option">X</span>
+                            <span class="odds">3.60</span>
+                        </button>
+                        <button class="odd-btn" data-match="2" data-market="1X2" data-option="2" data-odds="4.20">
+                            <span class="option">2</span>
+                            <span class="odds">4.20</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Match List -->
+        <section class="match-list-section" id="matchListSection">
+            <h2>All Matches</h2>
+            <div class="matches-table" id="matchesTable">
+                <!-- Matches will be dynamically generated here -->
+            </div>
+        </section>
+
+        <!-- Finished Matches Section -->
+        <section class="finished-matches-section" id="finishedMatchesSection">
+            <h2>Today's Results</h2>
+            <div class="finished-matches-container" id="finishedMatchesContainer">
+                <!-- Finished matches will be displayed here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Bet Slip -->
+    <div class="bet-slip" id="betSlip">
+        <div class="bet-slip-header">
+            <h3>Bet Slip</h3>
+            <div class="header-info">
+                <span class="selections-count" id="selectionsCount">0 selections</span>
+                <div class="budget-display-slip">
+                    <span class="budget-label">Balance:</span>
+                    <span class="budget-amount" id="userBudgetSlip">€50.00</span>
+                </div>
+            </div>
+        </div>
+        <div class="bet-slip-tabs">
+            <button class="tab-btn active" data-tab="bet-slip">Bet Slip</button>
+            <button class="tab-btn" data-tab="my-bets">My Bets</button>
+        </div>
+        <div class="bet-slip-content">
+            <div class="tab-content active" id="bet-slip-tab">
+                <div class="selections-list" id="selectionsList">
+                    <p class="empty-message">No selections added</p>
+                </div>
+                <div class="bet-stake" id="betStake" style="display: none;">
+                    <div class="stake-input">
+                        <label>Stake Amount:</label>
+                        <input type="number" id="stakeAmount" min="1" step="1" value="10">
+                        <span class="currency">€</span>
+                    </div>
+                    <div class="potential-return">
+                        <span>Potential Return:</span>
+                        <span class="return-amount" id="potentialReturn">€0.00</span>
+                    </div>
+                    <button class="place-bet-btn" id="placeBetBtn">Place Bet</button>
+                </div>
+            </div>
+            <div class="tab-content" id="my-bets-tab">
+                <div class="my-bets-list" id="myBetsList">
+                    <p class="empty-message">No bets placed yet</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Promotions Page (Hidden by default) -->
+    <div class="promotions-page" id="promotionsPage" style="display: none;">
+        <div class="promotions-content">
+            <img src="../../imagenes/modle icono pr.png" alt="Classroom" class="classroom-logo">
+            <h1>E33</h1>
+            <p>Game made by the creator</p>
+            <button class="exit-promotions-btn" id="exitPromotionsBtn">Exit</button>
+        </div>
+    </div>
+
+    <script src="betting.js"></script>
+</body>
+</html>

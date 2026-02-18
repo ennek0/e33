@@ -34,11 +34,11 @@ function performGlobalSearch(query) {
     const searchTerm = query.toLowerCase().trim();
     
     if (searchTerm === '') {
-        // Clear search - show all homepage cards and reset current view
+        // Clear search - show all course items and reset current view
         if (categoriesView && categoriesView.style.display !== 'none') {
-            const homepageCards = document.querySelectorAll('.homepage-card');
-            homepageCards.forEach(card => {
-                card.style.display = 'flex';
+            const courseItems = document.querySelectorAll('.course-item');
+            courseItems.forEach(item => {
+                item.style.display = 'block';
             });
         } else if (courseView && courseView.style.display !== 'none') {
             // Reset to show all assignments in current course
@@ -103,7 +103,7 @@ const categories = {
                 type: 'Game',
                 dueDate: 'No due date',
                 icon: 'sports_esports',
-                path: './snake/index.html'
+                path: './Juegos/snake/index.html'
             },
             {
                 id: 'tictactoe-game',
@@ -111,7 +111,7 @@ const categories = {
                 type: 'Strategy Game',
                 dueDate: 'No due date',
                 icon: 'grid_on',
-                path: './tictactoe/index.html'
+                path: './Juegos/tictactoe/index.html'
             },
             {
                 id: 'impostor-game',
@@ -119,7 +119,7 @@ const categories = {
                 type: 'Social Deduction Game',
                 dueDate: 'No due date',
                 icon: 'sports_esports',
-                path: './impostor/index.html'
+                path: './Juegos/impostor/index.html'
             },
             {
                 id: 'subway-surfers-newyork',
@@ -127,7 +127,7 @@ const categories = {
                 type: 'Running Game',
                 dueDate: 'No due date',
                 icon: 'sports_esports',
-                path: './subway-surfers-newyork-main/index.html'
+                path: './Juegos/subway-surfers-newyork-main/index.html'
             },
             {
                 id: 'bitlife',
@@ -135,7 +135,7 @@ const categories = {
                 type: 'Life Simulator',
                 dueDate: 'No due date',
                 icon: 'sports_esports',
-                path: './bitlife-main/index.html'
+                path: './Juegos/bitlife-main/index.html'
             },
             {
                 id: 'slope',
@@ -143,7 +143,7 @@ const categories = {
                 type: 'Endless Runner',
                 dueDate: 'No due date',
                 icon: 'sports_esports',
-                path: './slope-main/index.html'
+                path: './Juegos/slope-main/index.html'
             },
             {
                 id: 'temple-run-2',
@@ -151,7 +151,7 @@ const categories = {
                 type: 'Endless Runner',
                 dueDate: 'No due date',
                 icon: 'sports_esports',
-                path: './temple-run-2-main/index.html'
+                path: './Juegos/temple-run-2-main/index.html'
             }
         ]
     },
@@ -166,7 +166,7 @@ const categories = {
                 type: 'Football Betting Platform',
                 dueDate: 'No due date',
                 icon: 'sports_soccer',
-                path: './reta/betting.html'
+                path: './Juegos/reta/betting.html'
             },
             {
                 id: 'poker',
@@ -174,7 +174,7 @@ const categories = {
                 type: 'Texas Hold\'em',
                 dueDate: 'No due date',
                 icon: 'casino',
-                path: './poker/index.html'
+                path: './Juegos/poker/index.html'
             },
             {
                 id: 'blackjack',
@@ -182,7 +182,7 @@ const categories = {
                 type: 'Card Game',
                 dueDate: 'No due date',
                 icon: 'casino',
-                path: './black jack/index.html'
+                path: './Juegos/black jack/index.html'
             }
         ]
     },
@@ -197,7 +197,7 @@ const categories = {
                 type: 'Racing Game',
                 dueDate: 'No due date',
                 icon: 'directions_car',
-                path: './drift-hunters-main/index.html'
+                path: './Juegos/drift-hunters-main/index.html'
             },
             {
                 id: 'moto-x3m',
@@ -205,7 +205,7 @@ const categories = {
                 type: 'Motorcycle Racing',
                 dueDate: 'No due date',
                 icon: 'directions_car',
-                path: './moto-x3m-main/index.html'
+                path: './Juegos/moto-x3m-main/index.html'
             },
             {
                 id: 'classroom',
@@ -213,7 +213,7 @@ const categories = {
                 type: 'Traffic Game',
                 dueDate: 'No due date',
                 icon: 'directions_car',
-                path: './highway-traffic-main/index.html'
+                path: './Juegos/highway-traffic-main/index.html'
             },
             {
                 id: 'rocket-soccer-derby',
@@ -221,7 +221,7 @@ const categories = {
                 type: 'Soccer Racing',
                 dueDate: 'No due date',
                 icon: 'directions_car',
-                path: './rocket-soccer-derby-main/index.html'
+                path: './Juegos/rocket-soccer-derby-main/index.html'
             }
         ]
     },
@@ -236,7 +236,7 @@ const categories = {
                 type: 'Battle Game',
                 dueDate: 'No due date',
                 icon: 'sports_kabaddi',
-                path: './1v1-lol-main/index.html'
+                path: './Juegos/1v1-lol-main/index.html'
             },
             {
                 id: 'rooftop-snipers',
@@ -244,7 +244,7 @@ const categories = {
                 type: 'Shooting Game',
                 dueDate: 'No due date',
                 icon: 'sports_esports',
-                path: './rooftop-snipers-main/index.html'
+                path: './Juegos/rooftop-snipers-main/index.html'
             }
         ]
     },
@@ -259,7 +259,7 @@ const categories = {
                 type: 'Soccer Game',
                 dueDate: 'No due date',
                 icon: 'sports_soccer',
-                path: './penalty-shooters-2-main/index.html'
+                path: './Juegos/penalty-shooters-2-main/index.html'
             },
             {
                 id: 'football-masters',
@@ -267,7 +267,7 @@ const categories = {
                 type: 'Soccer Game',
                 dueDate: 'No due date',
                 icon: 'sports_esports',
-                path: './football-masters-main/index.html'
+                path: './Juegos/football-masters-main/index.html'
             }
         ]
     }
@@ -281,36 +281,254 @@ let courseDescription;
 let assignmentList;
 let backButton;
 
-// ===== INITIALIZATION =====
+// ===== LOGIN AND USER MANAGEMENT =====
+let currentUser = null;
+
+function initializeLogin() {
+    const accountBtn = document.getElementById('account-btn');
+    const loginModal = document.getElementById('login-modal');
+    const closeLoginBtn = document.getElementById('close-login');
+    const loginForm = document.getElementById('login-form');
+    const userInitials = document.getElementById('user-initials');
+    const backBtn = document.getElementById('back-btn');
+
+    console.log('Account button found:', !!accountBtn);
+
+    // Check if user is already logged in
+    const savedUser = localStorage.getItem('currentUser');
+    if (savedUser) {
+        currentUser = JSON.parse(savedUser);
+        updateUserDisplay();
+    }
+
+    // Account button click
+    accountBtn.addEventListener('click', () => {
+        console.log('Account button clicked!', currentUser);
+        if (currentUser) {
+            // User is logged in - show favorites
+            showFavoritesModal();
+        } else {
+            // User is not logged in - show login modal
+            loginModal.classList.add('active');
+        }
+    });
+
+    // Close modal
+    closeLoginBtn.addEventListener('click', () => {
+        loginModal.classList.remove('active');
+    });
+
+    // Close modal on outside click
+    loginModal.addEventListener('click', (e) => {
+        if (e.target === loginModal) {
+            loginModal.classList.remove('active');
+        }
+    });
+
+    // Handle login form submission
+    loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const name = document.getElementById('login-name').value.trim();
+        const surname = document.getElementById('login-surname').value.trim();
+        const email = document.getElementById('login-email').value.trim();
+        const password = document.getElementById('login-password').value.trim();
+        
+        if (name && surname && email && password) {
+            // Create user object
+            currentUser = {
+                name: name,
+                surname: surname,
+                email: email,
+                password: password, // In real app, this should be hashed
+                initials: name.charAt(0).toUpperCase() + surname.charAt(0).toUpperCase(),
+                favorites: JSON.parse(localStorage.getItem(`favorites_${email}`) || '[]')
+            };
+            
+            // Save to localStorage
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            
+            // Update UI
+            updateUserDisplay();
+            loginModal.classList.remove('active');
+            loginForm.reset();
+            
+            // Load favorites for this user
+            loadFavorites();
+        }
+    });
+
+    // Back button click
+    backBtn.addEventListener('click', () => {
+        showHomepage();
+    });
+
+    // Zubiri logo button click - navigate to homepage
+    const zubiriLogoBtn = document.getElementById('zubiri-logo-btn');
+    if (zubiriLogoBtn) {
+        zubiriLogoBtn.addEventListener('click', () => {
+            showHomepage();
+        });
+    }
+
+    // Euskadi logo button click - navigate to homepage
+    const euskadiLogoBtn = document.getElementById('euskadi-logo-btn');
+    if (euskadiLogoBtn) {
+        euskadiLogoBtn.addEventListener('click', () => {
+            showHomepage();
+        });
+    }
+}
+
+function updateUserDisplay() {
+    const userInitials = document.getElementById('user-initials');
+    if (currentUser) {
+        const initials = currentUser.initials || 
+            (currentUser.name.charAt(0).toUpperCase() + currentUser.surname.charAt(0).toUpperCase());
+        userInitials.textContent = initials;
+    } else {
+        userInitials.textContent = '?';
+    }
+}
+
+function logout() {
+    currentUser = null;
+    localStorage.removeItem('currentUser');
+    updateUserDisplay();
+}
+
+// ===== NAVIGATION =====
+function initializeNavigation() {
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            // Remove active class from all links
+            navLinks.forEach(l => l.classList.remove('active'));
+            
+            // Add active class to clicked link
+            link.classList.add('active');
+            
+            // Handle page navigation
+            const page = link.getAttribute('data-page');
+            handlePageNavigation(page);
+        });
+    });
+}
+
+function handlePageNavigation(page) {
+    switch(page) {
+        case 'home':
+            showHomepage();
+            setHeaderState(false, 'Página Principal');
+            // Remove active class from all course items
+            document.querySelectorAll('.course-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            break;
+        case 'personal':
+            // TODO: Implement personal area
+            alert('Área personal - En desarrollo');
+            break;
+        case 'courses':
+            // TODO: Implement courses page
+            alert('Mis cursos - En desarrollo');
+            break;
+    }
+}
+
+function setHeaderState(isInSection, title) {
+    const backBtn = document.getElementById('back-btn');
+    const mainNav = document.getElementById('main-nav');
+    const euskadiLogo = document.getElementById('euskadi-logo');
+    const sectionTitle = document.getElementById('section-title');
+    const mainHeader = document.querySelector('.main-header');
+    
+    if (isInSection) {
+        // Show section view: back button + section title
+        backBtn.style.display = 'flex';
+        mainNav.style.display = 'none';
+        euskadiLogo.style.display = 'none';
+        sectionTitle.style.display = 'block';
+        sectionTitle.textContent = title;
+        // Add blue line to header
+        mainHeader.classList.add('section-active');
+    } else {
+        // Show homepage view: navigation + logo
+        backBtn.style.display = 'none';
+        mainNav.style.display = 'flex';
+        euskadiLogo.style.display = 'block';
+        sectionTitle.style.display = 'none';
+        // Remove blue line from header
+        mainHeader.classList.remove('section-active');
+    }
+}
+
+function showSection(courseId) {
+    const category = categories[courseId];
+    if (!category) {
+        console.error('Category not found:', courseId);
+        return;
+    }
+
+    // Update header state for section view
+    setHeaderState(true, category.title);
+    
+    // Update page title
+    updatePageTitle(courseId);
+    
+    // Hide homepage and show course view
+    if (categoriesView) {
+        categoriesView.style.display = 'none';
+    }
+    if (gamesView) {
+        gamesView.style.display = 'flex';
+    }
+    
+    // Update course information
+    if (courseTitle) {
+        courseTitle.textContent = category.title;
+    }
+    if (courseDescription) {
+        courseDescription.textContent = category.section;
+    }
+    
+    // Render assignments
+    renderAssignments(category.assignments);
+    
+    // Set active state on course item
+    document.querySelectorAll('.course-item').forEach(item => {
+        item.classList.remove('active');
+    });
+    const activeCourseItem = document.querySelector(`[data-course="${courseId}"]`);
+    if (activeCourseItem) {
+        activeCourseItem.classList.add('active');
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     initializeElements();
     applyCardBackgrounds();
     setupEventListeners();
+    setupFavoritesListeners();
     initializeSearch();
+    initializeLogin();
+    initializeNavigation();
+    
+    // Check if user is already logged in
+    const savedUser = localStorage.getItem('currentUser');
+    if (savedUser) {
+        currentUser = JSON.parse(savedUser);
+        updateUserDisplay();
+        loadFavorites();
+    }
 });
 
 function applyCardBackgrounds() {
-    // Apply background images to cards
-    const homepageCards = document.querySelectorAll('.homepage-card');
-    console.log('Applying backgrounds to', homepageCards.length, 'cards');
-
-    homepageCards.forEach(card => {
-        const courseId = card.getAttribute('data-course');
-        const category = categories[courseId];
-        if (category && category.backgroundImage) {
-            const cardHeader = card.querySelector('.card-header-home');
-            if (cardHeader) {
-                cardHeader.style.backgroundImage = `url('${category.backgroundImage}')`;
-                cardHeader.style.backgroundSize = 'cover';
-                cardHeader.style.backgroundPosition = 'center';
-                console.log(`Applied background to ${courseId}:`, category.backgroundImage);
-            } else {
-                console.error(`Card header not found for ${courseId}`);
-            }
-        } else {
-            console.log(`No background image for ${courseId}`);
-        }
-    });
+    // No longer needed for list layout - course items don't have background images
+    console.log('Background images disabled for list layout');
 }
 
 function initializeElements() {
@@ -332,15 +550,11 @@ function initializeElements() {
 }
 
 function setupEventListeners() {
-    // Homepage Cards: Click to navigate to section
-    const homepageCards = document.querySelectorAll('.homepage-card');
-    homepageCards.forEach(card => {
-        card.addEventListener('click', (e) => {
-            // Don't navigate if clicking the menu button
-            if (e.target.closest('.card-menu-home')) {
-                return;
-            }
-            const courseId = card.getAttribute('data-course');
+    // Homepage Course Items: Click to navigate to section
+    const homepageCourseItems = document.querySelectorAll('.course-item');
+    homepageCourseItems.forEach(item => {
+        item.addEventListener('click', (e) => {
+            const courseId = item.getAttribute('data-course');
             if (courseId) {
                 showSection(courseId);
             }
@@ -596,6 +810,25 @@ function setupEventListeners() {
     }
 }
 
+// ===== UPDATE PAGE TITLE =====
+function updatePageTitle(sectionName) {
+    if (sectionName === 'home') {
+        document.title = 'Página Principal | Moodle';
+    } else if (sectionName === 'E33') {
+        document.title = '0222_PostuBakarrekoSistemaEragileak';
+    } else if (sectionName === 'Gambling Games') {
+        document.title = '0225_SareLokalak-2 | Moodle';
+    } else if (sectionName === 'Car Games') {
+        document.title = 'Curso: 01-InformatikaSegurtasuna(GOIZEZ) | Moodle';
+    } else if (sectionName === '1v1') {
+        document.title = 'Ikastaroa: 1664_Produkzio sektoreei aplikatutako digitalizazioa_EM-2 | Moodle';
+    } else if (sectionName === 'Football Games') {
+        document.title = 'Curso: MS21-2_English | Moodle';
+    } else {
+        document.title = `${sectionName} | Moodle`;
+    }
+}
+
 // ===== SHOW SECTION =====
 function showSection(courseId) {
     const category = categories[courseId];
@@ -605,6 +838,9 @@ function showSection(courseId) {
     }
 
     console.log('Showing section:', courseId, category);
+
+    // Update page title
+    updatePageTitle(category.title);
 
     // Update course info
     if (courseTitle) courseTitle.textContent = category.title;
@@ -686,6 +922,10 @@ function getIconSvg(iconType) {
 // ===== SHOW HOMEPAGE =====
 function showHomepage() {
     console.log('Showing homepage');
+    
+    // Update page title to home
+    updatePageTitle('home');
+    
     if (gamesView) {
         gamesView.classList.remove('active');
         gamesView.style.display = 'none';
@@ -755,4 +995,160 @@ function toggleDarkMode() {
 if (darkModeToggle) {
     darkModeToggle.addEventListener('click', toggleDarkMode);
     loadDarkModePreference();
+}
+
+// ===== FAVORITES SYSTEM =====
+function showFavoritesModal() {
+    const favoritesModal = document.getElementById('favorites-modal');
+    favoritesModal.classList.add('active');
+    loadFavoritesList();
+}
+
+function hideFavoritesModal() {
+    const favoritesModal = document.getElementById('favorites-modal');
+    favoritesModal.classList.remove('active');
+}
+
+function loadFavorites() {
+    if (!currentUser) return;
+    
+    // Update favorite buttons state
+    const favoriteBtns = document.querySelectorAll('.favorite-btn');
+    favoriteBtns.forEach(btn => {
+        const courseId = btn.getAttribute('data-course');
+        if (currentUser.favorites.includes(courseId)) {
+            btn.classList.add('active');
+            btn.setAttribute('title', 'Quitar de favoritos');
+        } else {
+            btn.classList.remove('active');
+            btn.setAttribute('title', 'Añadir a favoritos');
+        }
+    });
+}
+
+function loadFavoritesList() {
+    if (!currentUser) return;
+    
+    const favoritesList = document.getElementById('favorites-list');
+    favoritesList.innerHTML = '';
+    
+    if (currentUser.favorites.length === 0) {
+        favoritesList.innerHTML = `
+            <div class="empty-favorites">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+                <p>No tienes juegos favoritos aún</p>
+                <p>Añade juegos desde la página principal</p>
+            </div>
+        `;
+        return;
+    }
+    
+    currentUser.favorites.forEach(courseId => {
+        const category = categories[courseId];
+        if (category) {
+            const favoriteItem = createFavoriteItem(courseId, category);
+            favoritesList.appendChild(favoriteItem);
+        }
+    });
+}
+
+function createFavoriteItem(courseId, category) {
+    const item = document.createElement('div');
+    item.className = 'favorite-item';
+    item.innerHTML = `
+        <div class="favorite-info">
+            <div class="favorite-icon" style="background-color: ${category.color}">
+                ${category.title.charAt(0)}
+            </div>
+            <div class="favorite-details">
+                <h4>${category.title}</h4>
+                <p>${category.description}</p>
+            </div>
+        </div>
+        <button class="remove-favorite" data-course="${courseId}" title="Quitar de favoritos">
+            <svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
+                <path d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+    `;
+    
+    // Add click event to navigate to game
+    item.querySelector('.favorite-info').addEventListener('click', () => {
+        hideFavoritesModal();
+        showSection(courseId);
+    });
+    
+    // Add remove event
+    item.querySelector('.remove-favorite').addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleFavorite(courseId);
+    });
+    
+    return item;
+}
+
+function toggleFavorite(courseId) {
+    if (!currentUser) {
+        loginModal.classList.add('active');
+        return;
+    }
+    
+    const index = currentUser.favorites.indexOf(courseId);
+    if (index > -1) {
+        // Remove from favorites
+        currentUser.favorites.splice(index, 1);
+    } else {
+        // Add to favorites
+        currentUser.favorites.push(courseId);
+    }
+    
+    // Save to localStorage
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+    localStorage.setItem(`favorites_${currentUser.email}`, JSON.stringify(currentUser.favorites));
+    
+    // Update UI
+    loadFavorites();
+    loadFavoritesList();
+}
+
+// Setup favorites event listeners
+function setupFavoritesListeners() {
+    // Favorite buttons on homepage
+    const favoriteBtns = document.querySelectorAll('.favorite-btn');
+    favoriteBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const courseId = btn.getAttribute('data-course');
+            toggleFavorite(courseId);
+        });
+    });
+    
+    // Close favorites modal
+    const closeFavoritesBtn = document.getElementById('close-favorites');
+    if (closeFavoritesBtn) {
+        closeFavoritesBtn.addEventListener('click', hideFavoritesModal);
+    }
+    
+    // Logout button
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+            if (confirm('¿Estás seguro de que quieres cerrar sesión?')) {
+                logout();
+                hideFavoritesModal();
+            }
+        });
+    }
+    
+    // Close modal on outside click
+    const favoritesModal = document.getElementById('favorites-modal');
+    if (favoritesModal) {
+        favoritesModal.addEventListener('click', (e) => {
+            if (e.target === favoritesModal) {
+                hideFavoritesModal();
+            }
+        });
+    }
 }

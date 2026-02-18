@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>Mobile Test - Impostor Game</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-item {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-left: 4px solid #1a1a1a;
+            background: #f9f9f9;
+        }
+        .status {
+            font-weight: bold;
+            color: #1a1a1a;
+        }
+        .success { color: #28a745; }
+        .info { color: #17a2b8; }
+        .warning { color: #ffc107; }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Mobile Compatibility Test</h1>
+        <p>Testing mobile features for the Impostor game:</p>
+        
+        <div class="test-item">
+            <strong>Device Detection:</strong> 
+            <span id="device-status" class="status">Testing...</span>
+        </div>
+        
+        <div class="test-item">
+            <strong>Touch Support:</strong> 
+            <span id="touch-status" class="status">Testing...</span>
+        </div>
+        
+        <div class="test-item">
+            <strong>Viewport Settings:</strong> 
+            <span id="viewport-status" class="status">Testing...</span>
+        </div>
+        
+        <div class="test-item">
+            <strong>Screen Size:</strong> 
+            <span id="screen-status" class="status">Testing...</span>
+        </div>
+        
+        <div class="test-item">
+            <strong>Haptic Feedback:</strong> 
+            <span id="haptic-status" class="status">Testing...</span>
+        </div>
+        
+        <div class="test-item">
+            <strong>Orientation:</strong> 
+            <span id="orientation-status" class="status">Testing...</span>
+        </div>
+        
+        <button onclick="runTests()" style="background: #1a1a1a; color: white; padding: 12px 24px; border: none; border-radius: 5px; cursor: pointer; margin-top: 20px;">
+            Run Tests Again
+        </button>
+    </div>
+
+    <script>
+        function runTests() {
+            // Device detection
+            const userAgent = navigator.userAgent;
+            const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+            document.getElementById('device-status').textContent = isMobile ? 'Mobile detected' : 'Desktop detected';
+            document.getElementById('device-status').className = 'status ' + (isMobile ? 'success' : 'info');
+            
+            // Touch support
+            const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+            document.getElementById('touch-status').textContent = hasTouch ? 'Touch supported' : 'Touch not supported';
+            document.getElementById('touch-status').className = 'status ' + (hasTouch ? 'success' : 'warning');
+            
+            // Viewport
+            const viewport = document.querySelector('meta[name="viewport"]');
+            const hasViewport = viewport && viewport.getAttribute('content').includes('width=device-width');
+            document.getElementById('viewport-status').textContent = hasViewport ? 'Responsive viewport set' : 'Viewport not optimized';
+            document.getElementById('viewport-status').className = 'status ' + (hasViewport ? 'success' : 'warning');
+            
+            // Screen size
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            const isSmallScreen = width <= 768;
+            document.getElementById('screen-status').textContent = `${width}x${height} (${isSmallScreen ? 'Mobile' : 'Desktop'} size)`;
+            document.getElementById('screen-status').className = 'status ' + (isSmallScreen ? 'success' : 'info');
+            
+            // Haptic feedback
+            const hasVibration = 'vibrate' in navigator;
+            document.getElementById('haptic-status').textContent = hasVibration ? 'Vibration API available' : 'Vibration API not available';
+            document.getElementById('haptic-status').className = 'status ' + (hasVibration ? 'success' : 'warning');
+            
+            // Orientation
+            const orientation = screen.orientation || screen.mozOrientation || screen.msOrientation;
+            const hasOrientation = !!orientation;
+            document.getElementById('orientation-status').textContent = hasOrientation ? 'Orientation API supported' : 'Orientation API not supported';
+            document.getElementById('orientation-status').className = 'status ' + (hasOrientation ? 'success' : 'warning');
+        }
+        
+        // Run tests on load
+        window.addEventListener('load', runTests);
+    </script>
+</body>
+</html>
